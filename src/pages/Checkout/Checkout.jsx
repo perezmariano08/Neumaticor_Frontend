@@ -125,7 +125,7 @@ const Checkout = () => {
         mensaje += `*TOTAL:* $${formatPrice(totalPrice)}%0A%0A`;
 
         if (opcionPago === "Credito"){
-            mensaje += `*TOTAL CON INTERES:* $${totalConInteres} (${formState.cuotas}x $${formatPrice(montoPorCuota)}) %0A%0A`;
+            mensaje += `*TOTAL CON INTERES:* $${formatPrice(totalConInteres)} (${formState.cuotas}x $${formatPrice(montoPorCuota)}) %0A%0A`;
         }
         
         

@@ -3,7 +3,8 @@ export const SHIPPING_COST = 1500;
 export const BASE_URL = 'https://neumaticor.com';
 export const IMAGES_URL = 'https://darkslategrey-dragonfly-873689.hostingersite.com/uploads';
 export const API_URL = 'http://localhost:3001';
-export const URL_API = 'http://localhost:3001/api/';
+
+export const URL_API = 'https://apineumaticor.vercel.app/api/';
 
 export const CuotasNx = [
     { value: 1, label: '1 cuota (Sin interés)' },

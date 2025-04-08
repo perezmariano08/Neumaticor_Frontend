@@ -362,7 +362,7 @@ const Checkout = () => {
                                 Vaciar carrito
                             </Button>
                             <Button
-                                disabled={!cartItems.length}
+                                disabled={!cartItems.length || !opcionPago}
                                 onClick={() => {
                                 finalizarCompra(); // Llamar a la función para enviar el mensaje de WhatsApp
                                 }}

@@ -37,10 +37,8 @@ const ModalMenu = () => {
                                 <Divider/>
                                 <NavbarListModalMenu>
                                     <NavLinkStyled to={'/'} onClick={() => dispatch(toggleHiddenMenu())}>Inicio</NavLinkStyled>
-                                    <NavLinkStyled to={'/servicios'} onClick={() => dispatch(toggleHiddenMenu())}>Servicios</NavLinkStyled>
+                                    <NavLinkStyled to={'/login'} onClick={() => dispatch(toggleHiddenMenu())}>Acceder</NavLinkStyled>
                                     <NavLinkStyled to={'/productos'} onClick={() => dispatch(toggleHiddenMenu())}>Productos</NavLinkStyled>
-                                    <NavLinkStyled to={'/contacto'} onClick={() => dispatch(toggleHiddenMenu())}>Contacto</NavLinkStyled>
-                                    <NavLinkStyled to={'/sobre-nosotros'} onClick={() => dispatch(toggleHiddenMenu())}>Sobre nosotros</NavLinkStyled>
                                 </NavbarListModalMenu>
                             </ModalMenuContainerStyled>
                         

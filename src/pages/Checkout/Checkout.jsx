@@ -87,6 +87,8 @@ const Checkout = () => {
         setOpcionPago(e.target.value);
     };
 
+    console.log(opcionPago);
+    console.log(formState);
     
 
     // Función para generar el mensaje de WhatsApp
@@ -97,16 +99,36 @@ const Checkout = () => {
         {
             user ? mensaje += `*Usuario:* ${user.nombre}%0A%0A` : mensaje += `*Usuario:* Cliente Final %0A%0A`
         }
-        mensaje += `*Total:* $${totalPrice}%0A%0A`;
+        mensaje += `*Total:* $${formatPrice(totalPrice)}%0A%0A`;
         mensaje += "_Mi pedido es_%0A%0A"; // Título del pedido
 
         cartItems.forEach((item) => {
-        mensaje += `*${item.descripcion}* %0A${item.quantity}x - $${
-            item.precio * item.quantity
-        }%0A%0A`; // Detalle del producto
+            mensaje += `*${item.descripcion}* %0A${item.quantity}x - $${formatPrice(
+                item.precio * item.quantity)
+            }%0A%0A`; // Detalle del producto
         });
 
-        mensaje += `*TOTAL:* $${totalPrice}%0A%0A`;
+        
+
+        if (opcionPago === "Efectivo") {
+            mensaje += `*Metodo de pago:* Efectivo %0A%0A`;
+        } else {
+            mensaje += `*Metodo de pago:* ${opcionPago} ${
+                formState.tarjeta === "nx" ? "Naranja X" :
+                formState.tarjeta === "visa" ? "Visa" :
+                formState.tarjeta === "master" ? "MasterCard" :
+                "false"
+            }%0A%0A`;
+        }
+        
+
+        mensaje += `*TOTAL:* $${formatPrice(totalPrice)}%0A%0A`;
+
+        if (opcionPago === "Credito"){
+            mensaje += `*TOTAL CON INTERES:* $${totalConInteres} (${formState.cuotas}x $${formatPrice(montoPorCuota)}) %0A%0A`;
+        }
+        
+        
         mensaje += "_Espero tu respuesta para confirmar mi pedido_";
 
         return mensaje;

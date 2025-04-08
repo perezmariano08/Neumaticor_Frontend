@@ -9,6 +9,10 @@ export const ProductsWrapper = styled(WrapperStyled)`
     justify-content: space-between;
     padding: 40px 30px;
     gap: 20px;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+    }
 `
 
 export const ProductosFiltroWrapper= styled.div`
@@ -20,6 +24,11 @@ export const ProductosFiltroWrapper= styled.div`
     min-width: 200px;
     justify-content: start;
     gap: 30px;
+
+    @media (max-width: 768px) {
+        position: static;
+        flex-direction: row;
+    }
 `
 
 

@@ -23,6 +23,10 @@ export const LoginForm = styled.form`
       margin-top: 10px;
       width: 100%;
    }
+
+   @media (max-width: 768px) {
+      width: 100%;
+   }
 `
 
 export const LoginInputWrapper = styled.div`

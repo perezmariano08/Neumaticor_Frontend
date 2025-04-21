@@ -51,7 +51,8 @@ export const CarritoPedidoDetallesWrapper = styled.div`
     top: 120px;
 
     @media (max-width: 768px) {
-        min-width: none;
+        width: 100%;
+        min-width: 10px;
     }
 `
 
@@ -87,6 +88,11 @@ export const CarritoResumenWrapper = styled.div`
     border-radius: 10px;
     border: 1px solid var(--white-100);
     min-width: 400px;
+
+    @media (max-width: 768px) {
+        width: 100%;
+        min-width: 10px;
+    }
 `
 
 export const CarritoResumenTitulo = styled.div`

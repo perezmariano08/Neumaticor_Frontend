@@ -48,7 +48,11 @@ export const CarritoPedidoDetallesWrapper = styled.div`
     min-width: 400px;
     height: fit-content;
     position: sticky;
-    top: 120px
+    top: 120px;
+
+    @media (max-width: 768px) {
+        min-width: none;
+    }
 `
 
 export const CarritoCupon = styled.div`

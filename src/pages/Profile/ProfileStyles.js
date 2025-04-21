@@ -58,6 +58,10 @@ export const ProfilePasoForm = styled.div`
     border: 1px solid var(--white-100);
     padding: 16px;
     border-radius: 10px;
+    @media (max-width: 768px) {
+        display: flex;
+        flex-direction: column;
+    }
 `
 
 export const ProfilePasoInputWrapper = styled.div`

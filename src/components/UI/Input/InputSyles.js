@@ -6,7 +6,7 @@ export const InputContainerStyled = styled.div`
     flex-direction: column;
     align-items: start;
     gap: 5px;
-    border-radius: 30px;
+    border-radius: 10px;
     width: 100%;
     position: relative;
     height: 100%;
@@ -16,7 +16,7 @@ export const InputContainerStyled = styled.div`
         width: 100%;
         
         input {
-            background-color: var(--gray-400);
+            background-color: var(--black-0);
             border-radius: 10px;
             border: 1px solid var(--gray-400); 
             color: var(--white);
@@ -73,24 +73,25 @@ export const LoaderIconWrapper = styled.div`
 `;
 
 export const InputWrapper = styled.input`
-    background-color: transparent;
-    border: 1px solid var(--gray-200); 
-    color: var(--black);
+    border: 1px solid var(--white-100); 
+    color: var(--black-900);
     outline: none; 
     width: 100%;
-    padding: 10px;
+    padding: 12px 16px;
     transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
     appearance: none;
     border-radius: 10px;
     outline-color: transparent;
-    font-size: 14px;
+    font-size: 16px;
+    font-weight: 200;
     display: flex;
     align-items: center;
+    background-color: var(--white-0);
 
     &:focus {
         outline: 0 none;
-        outline-offset: 0;
         box-shadow: 0 0 0 1px var(--yellow);
+        outline-offset: 0;
         border-color: var(--yellow);
 
         ~ .icon-input {
@@ -110,8 +111,7 @@ export const InputWrapper = styled.input`
     }
 
     &::placeholder {
-        color: var(--gray-300); /* Cambia 'red' por el color que prefieras */
-        font-weight: 300;
+        color: var(--white-800); /* Cambia 'red' por el color que prefieras */
     }
 `;
 
@@ -216,5 +216,17 @@ export const InputAreaWrapper = styled.textarea`
         ~ .icon-input {
             color: var(--red);
         }
+    }
+`;
+
+export const InputContainer = styled.input`
+    padding: 12px 16px;
+    font-weight: 200;
+    border: 1px solid var(--white-100);
+    border-radius: 10px;
+    font-size: 14px;
+    
+    &::placeholder {
+        color: var(--white-800);
     }
 `;

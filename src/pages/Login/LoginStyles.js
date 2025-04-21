@@ -11,6 +11,13 @@ export const LoginWrapper = styled(WrapperStyled)`
    gap: 40px;
 `
 
+export const MensajeError = styled.div`
+   padding: 8px 20px;
+   border-radius: 10px;
+   background-color: #f851491a;
+   border: 1px solid  #f8514966;
+`
+
 
 
 export const LoginForm = styled.form`

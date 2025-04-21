@@ -12,7 +12,7 @@ const Input = forwardRef(({ placeholder, type = "text", icon, className, isError
     const inputType = type === 'password' && showPassword ? 'text' : type;
 
     return (
-        <InputContainerStyled className={className}>
+        <>
             <InputWrapper
                 name={name}
                 ref={ref}
@@ -28,7 +28,7 @@ const Input = forwardRef(({ placeholder, type = "text", icon, className, isError
                 </div>
             )}
             {isError && <span className='error-message'>{errorMessage}</span>}
-        </InputContainerStyled>
+        </>
     );
 });
 

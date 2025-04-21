@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchProductos, fetchProductosDestacados } from "../../api/productos";
+import { fetchProducto, fetchProductos, fetchProductosConPrecio, fetchProductosDestacados } from "../../api/productos";
+import { useSelector } from 'react-redux';
 
 export const useProductos = () => {
     return useQuery({
@@ -9,6 +10,13 @@ export const useProductos = () => {
     });
 };
 
+export const useProducto = (id_producto) => {
+    return useQuery({
+        queryKey: ["producto", id_producto],  // Cambié esto para hacer que la caché sea única por producto
+        queryFn: () => fetchProducto(id_producto), // Cambié esto para que no se ejecute inmediatamente
+        staleTime: 1000 * 60 * 0.5, // Caché de 5 minutos
+    });
+};
 
 export const useProductosDestacados = () => {
     return useQuery({
@@ -17,3 +25,14 @@ export const useProductosDestacados = () => {
         staleTime: 1000 * 60 * 0.5, // Caché de 5 minutos
     });
 };
+
+export const useProductosConPrecio = (idProducto) => {
+    const idUsuario = useSelector((state) => state.user.user?.id_usuario); // Obtenemos el id_usuario desde Redux
+    
+    return useQuery({
+        queryKey: ['productosPrecios', idUsuario, idProducto], // Añadimos id_usuario y id_producto (si existe) a la key para asegurar que la consulta se realice con el id correcto
+        queryFn: () => fetchProductosConPrecio(idUsuario, idProducto), // Pasamos id_usuario y id_producto como parámetros
+        staleTime: 1000 * 60 * 5, // Tiempo de caché
+    });
+};
+

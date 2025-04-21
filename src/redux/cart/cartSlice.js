@@ -15,11 +15,13 @@ const cartSlice = createSlice({
     reducers: {
         //Agregar al carrito
         addToCart: (state, action) => {
+            const { product, quantity } = action.payload;
+        
             return {
                 ...state,
-                cartItems: addItemToCart(state.cartItems,action.payload ),
-                shippingCost: SHIPPING_COST
-            }
+                cartItems: addItemToCart(state.cartItems, product, quantity),
+                shippingCost: SHIPPING_COST,
+            };
         },
         //Remover del carrito
         removeFromCart: (state, action) => {            

@@ -1,42 +1,33 @@
 import React, { useState } from 'react'
-import { 
-    IconCart, 
-    NavLinkStyled, 
-    NavbarContainerStyled, 
-    NavbarIcons, 
-    NavbarList, 
-    NavbarLogo, 
-    NavbarTopContainerStyled, 
-    NavbarTopItem, 
-    NavbarTopItems, 
-    NavbarTopWrapper, 
-    NavbarWrapper, 
-    OpenModalMenu, 
-    OpenModalUser
+import { IconCart, NavLinkStyled, NavbarBusqueda, NavbarContainerStyled, NavbarIcons, NavbarList, NavbarLogo, NavbarTopContainerStyled, NavbarTopItem, NavbarTopItems, NavbarTopWrapper, NavbarWrapper, OpenModalMenu, OpenModalUser
 } from './NavbarStyles'
 
 // React Icons
 import { FaInstagram, FaUser} from "react-icons/fa6";
 import { BsEnvelopeAt } from "react-icons/bs";
-import { IoCartOutline } from "react-icons/io5";
+import { PiShoppingCartLight } from "react-icons/pi";
 import { CgMenuGridO } from "react-icons/cg";
+import { RiUserLine } from "react-icons/ri";
 // Modales
 import ModalMenu from '../ModalMenu/ModalMenu';
-import ModalCart from '../ModalCart/ModalCart';
-
+// Redux
 import { useDispatch, useSelector } from 'react-redux';
+
 import { toggleHiddenMenu } from '../../redux/menu/menuSlice';
-import LogoNavbar from '/Logos/Logotipo-Negro.png'
-import { logout } from '../../redux/user/userSlice';
 import ModalUser from '../ModalUser/ModalUser';
+import { IMAGES_URL } from '../../utils/constants';
+import InputText from '../UI/InputText/InputText';
+
 
 
 const Navbar = () => {
     const dispatch = useDispatch()
     const [toggleModalUser, setToggleModalUser] = useState(false)
+
     const totalCartItems = useSelector((state) => 
         state.cart.cartItems).reduce((acc, item) => (acc += item.quantity), 0
     )
+    const [busqueda, setBusqueda] = useState('');
 
     const user = useSelector((state) => state.user.user);
     
@@ -47,21 +38,33 @@ const Navbar = () => {
                 <NavbarTopWrapper>
                     <NavbarTopItems>
                         <NavbarTopItem target='_blank' to={'mailto:contacto@cubatoficial.online'}>
-                            <BsEnvelopeAt className='icon'/>
-                            <span>contacto@neumaticor.com</span>
+                            <BsEnvelopeAt />
+                            <p>contacto@neumaticor.com</p>
                         </NavbarTopItem>
-                        <NavbarTopItem target='_blank' to={'https://wa.link/5je7pn'}>
-                            <FaInstagram className='icon'/>
-                            <span className='number'>neumaticor.ok</span>
+                        <NavbarTopItem target='_blank' to={'https://www.instagram.com/neumaticor.ok/'}>
+                            <FaInstagram />
+                            <p className='number'>neumaticor.ok</p>
                         </NavbarTopItem>
                     </NavbarTopItems>
+                    {
+                        user && <p>{`¡Bienvenido ${user.nombre}!`}</p>
+                    }
                 </NavbarTopWrapper>
             </NavbarTopContainerStyled>
             <NavbarContainerStyled>
                 <NavbarWrapper>
                     <NavbarLogo whileTap={{scale: .95}} href='/'>
-                        <img src={LogoNavbar} alt="Logo Cubat" className='logo-navbar'/>
+                        <img src={`${IMAGES_URL}/images/logos/logotipo-negro.png`} alt="Logo Neumaticor" title='Neumaticor' />
                     </NavbarLogo>
+                    {/* <NavbarBusqueda>
+                        <InputText 
+                            name="busqueda"
+                            value={busqueda}
+                            onChange={(e) => setBusqueda(e.target.value)}
+                            placeholder="¿Qué estas buscando?"
+                        />
+                    </NavbarBusqueda>
+                     */}
                     <NavbarIcons>
                         <NavbarList>
                             <li><NavLinkStyled to={'/'}>Inicio</NavLinkStyled></li>
@@ -70,8 +73,8 @@ const Navbar = () => {
                                 <li><NavLinkStyled to="/login">Acceder</NavLinkStyled></li>
                             )}
                         </NavbarList>
-                        <IconCart whileTap={{scale: .85}} to={`/checkout`}>
-                            <IoCartOutline/>
+                        <IconCart whileTap={{scale: .85}} to={`/carrito`}>
+                            <PiShoppingCartLight />
                             <span>{totalCartItems}</span>
                         </IconCart>
                         <OpenModalMenu whileTap={{scale: .8}} className='menu-icon' onClick={() => dispatch(toggleHiddenMenu())}>
@@ -80,19 +83,16 @@ const Navbar = () => {
                         {/* Mostrar el nombre del usuario si está autenticado, o el login */}
                         {user && (
                             <OpenModalUser onClick={() => setToggleModalUser(!toggleModalUser)}>
-                                <FaUser />
+                                <RiUserLine />
                                 {
                                     toggleModalUser && <ModalUser/>
                                 }
                             </OpenModalUser>
                         )}
-                        
                     </NavbarIcons> 
                 </NavbarWrapper>
             </NavbarContainerStyled>
-            <ModalCart/>
             <ModalMenu/>
-            
         </>
         
     )

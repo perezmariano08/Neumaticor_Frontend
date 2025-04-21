@@ -14,7 +14,7 @@ export const SelectContainerStyled = styled.div`
     .arrow {
         position: absolute;
         right: 12px;
-        color: var(--gray-200);
+        color: var(--black-200);
     }
 
     /* .icon-select {

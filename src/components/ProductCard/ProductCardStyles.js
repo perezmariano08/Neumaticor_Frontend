@@ -4,28 +4,29 @@ export const ProductCardWrapper = styled.article`
     display: flex;
     flex-direction: column;
     gap: 15px;
-    width: 300px;
     border-radius: 20px;
-
-    @media (max-width: 768px) {
-        width: 44%;
-    }
-`
-export const ProductImg = styled.div`
     width: 100%;
-    background-color: var(--white);
-    border-radius: 20px;
-    border: 1px solid var(--gray-200);
+    max-width: 314px;
+`;
+
+export const ProductImg = styled.header`
+    width: 100%;
+    background-color: var(--white-0);
+    border-radius: 10px;
+    border: 1px solid var(--white-100);
     display: flex;
+    justify-content: center;
     overflow: hidden;
     position: relative;
 
     .producto {
+        border-radius: 20px;
         width: 100%;
         transition: all .3s ease-in-out;
         cursor: pointer;
+        padding: 10px;
         &:hover {
-            opacity: .80;
+            opacity: .85;
             scale: 1.02;
         }
     }
@@ -43,33 +44,12 @@ export const ProductCardInfo = styled.div`
     flex-direction: column;
     gap: 15px;
     width: 100%;
-    padding: 0 5px;
-    h3 { 
-        font-size: 16px;
-        line-height: 16px;
-        color: var(--blue);   
-        min-height: 32px;
-    }
-    
-    h4 {
-        font-size: 20px;
-        font-weight: 500;
-        color: var(--gray-500);
-    }
+    padding: 5px;
 
-    @media (max-width: 968px) {
-        h3 {
-            font-size: 14px;
-            line-height: 14px;
-            min-height: 24px;
-            min-height: 42px;
-        }
-
-        h4 {
-            font-size: 18px;
-            font-weight: 500;
-            color: var(--gray-500);
-        }   
+    .price {
+        font-size: 18px;
+        font-weight: 400;
+        color: var(--black-900);
     }
 `
 
@@ -77,10 +57,20 @@ export const ProductTitle = styled.div`
     display: flex;
     flex-direction: column;
     gap: 5px;
+
+    h2 { 
+        font-size: 16px;
+        line-height: 16px;
+        color: var(--black-800);   
+        min-height: 32px;
+        font-weight: 300;
+    }
+
     span {
-        color: var(--gray-400);
+        color: var(--black-600);
         text-transform: uppercase;
         font-size: 12px;
+        font-weight: 300;
     }
 
     @media (max-width: 968px) {
@@ -88,12 +78,6 @@ export const ProductTitle = styled.div`
             font-size: 10px;
             line-height: 10px;
         }
-
-        h4 {
-            font-size: 10px;
-            font-weight: 500;
-            color: var(--gray-500);
-        }   
     }
 `
 

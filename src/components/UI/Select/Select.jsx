@@ -1,6 +1,7 @@
 import React from 'react';
 import { SelectContainerStyled, SelectWrapper } from './SelectStyles';
 import { VscTriangleDown } from "react-icons/vsc";
+import { LiaAngleDownSolid } from 'react-icons/lia';
 
 const Select = ({ data, placeholder, column = "nombre", onChange, id_, icon, value, disabled, name, planilla }) => {
     
@@ -24,7 +25,7 @@ const Select = ({ data, placeholder, column = "nombre", onChange, id_, icon, val
                     </option>
                 ))}
             </SelectWrapper>
-            <VscTriangleDown className='arrow' />
+            <LiaAngleDownSolid className='arrow'/>
             {/* {icon} */}
         </SelectContainerStyled>
     );

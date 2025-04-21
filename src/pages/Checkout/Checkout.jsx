@@ -23,25 +23,39 @@ import {
 import { clearCart } from "../../redux/cart/cartSlice";
 import CheckoutItem from "./CheckoutItem";
 import Select from "../../components/UI/Select/Select";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Input from "../../components/UI/Input/Input";
 import useForm from "../../hooks/useForm";
 import { CuotasNx } from "../../utils/constants";
+import { useProductosConPrecio } from "../../hooks/api/useProductos";
+import Skeleton from "react-loading-skeleton";
 
 const Checkout = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
-    const { cartItems } = useSelector((state) => state.cart);
     const user = useSelector((state) => state.user.user); // Obtener el estado del usuario desde Redux   
+
+    const cartItems = useSelector(state => state.cart.cartItems);
+    const { data: productosConPrecio, isLoading } = useProductosConPrecio();
+
+    const productosCarrito = useMemo(() => {
+        return cartItems.map(item => {
+        const producto = productosConPrecio?.find(p => p.id_producto === item.id_producto);
+
+        return {
+            ...producto,
+            quantity: item.quantity,
+            subtotal: (producto?.precio || 0) * item.quantity
+        };
+        });
+    }, [cartItems, productosConPrecio, isLoading]);
+
     
-    // Calcular precio total
-    const totalPrice = cartItems.reduce((acc, item) => {
-        if (user) {
-            return (acc += item.precio_cuenta * item.quantity);
-        } else {
-            return (acc += item.precio * item.quantity);
-        }
-    }, 0);
+    const precioTotal = useMemo(() => {
+        return productosCarrito.reduce((total, item) => total + item.subtotal, 0);
+    }, [productosCarrito]);
+    
+
     // Manejo del form
     const [formState, handleFormChange, resetForm, setFormState] = useForm({ 
         cuotas: 1,
@@ -51,7 +65,7 @@ const Checkout = () => {
     const interesPorCuotas = {
         1: 0,      // Sin interés para una cuota
         3: 0.8,   // 10% de interés para 3 cuotas
-        6: 0.20,   // 18% de interés para 6 cuotas
+        6: 0.17,   // 18% de interés para 6 cuotas
         9: 0.25,   // 25% de interés para 9 cuotas
         12: 0.34   // 33% de interés para 12 cuotas
     };
@@ -60,14 +74,13 @@ const Checkout = () => {
         1: 0,      // Sin interés para una cuota
         4: 0,   // 10% de interés para 3 cuotas
         6: 0.8,   // 18% de interés para 6 cuotas
-        10: 0.10,   // 25% de interés para 9 cuotas
-        12: 0.25   // 33% de interés para 12 cuotas
+        10: 0.17,   // 25% de interés para 9 cuotas
     };
 
     const calcularCargos = () => {
         const cuotas = parseInt(formState.cuotas, 10);
         const interes = formState.tarjeta === 'nx' ? interesNaranja[cuotas] : interesPorCuotas[cuotas] || 0;        
-        const totalConInteres = totalPrice * (1 + interes);
+        const totalConInteres = precioTotal * (1 + interes);
         const montoPorCuota = totalConInteres / cuotas;
     
         return {
@@ -87,19 +100,15 @@ const Checkout = () => {
         setOpcionPago(e.target.value);
     };
 
-    console.log(opcionPago);
-    console.log(formState);
-    
-
     // Función para generar el mensaje de WhatsApp
-    const generarMensajeWhatsApp = (cartItems, totalPrice) => {
+    const generarMensajeWhatsApp = (cartItems, precioTotal) => {
         let mensaje = "_¡Hola! Te paso el resumen de mi pedido_ %0A%0A"; // Encabezado del mensaje
 
         mensaje += `*Fecha:* ${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}hs%0A`;
         {
             user ? mensaje += `*Usuario:* ${user.nombre}%0A%0A` : mensaje += `*Usuario:* Cliente Final %0A%0A`
         }
-        mensaje += `*Total:* $${formatPrice(totalPrice)}%0A%0A`;
+        mensaje += `*Total:* $${formatPrice(cartItems)}%0A%0A`;
         mensaje += "_Mi pedido es_%0A%0A"; // Título del pedido
 
         cartItems.forEach((item) => {
@@ -122,7 +131,7 @@ const Checkout = () => {
         }
         
 
-        mensaje += `*TOTAL:* $${formatPrice(totalPrice)}%0A%0A`;
+        mensaje += `*TOTAL:* $${formatPrice(precioTotal)}%0A%0A`;
 
         if (opcionPago === "Credito"){
             mensaje += `*TOTAL CON INTERES:* $${formatPrice(totalConInteres)} (${formState.cuotas}x $${formatPrice(montoPorCuota)}) %0A%0A`;
@@ -136,14 +145,12 @@ const Checkout = () => {
 
     const finalizarCompra = () => {
         const numeroWhatsApp = "5493517649357"; // El número al que se enviará el mensaje
-        const mensaje = generarMensajeWhatsApp(cartItems, totalPrice);
+        const mensaje = generarMensajeWhatsApp(cartItems, precioTotal);
         const url = `https://api.whatsapp.com/send?phone=${numeroWhatsApp}&text=${mensaje}`;
 
         window.open(url, "_blank"); // Abrir WhatsApp Web en una nueva pestaña/ventana
     };
-    
-    console.log(cartItems);
-    
+        
 
     return (
         <CheckoutContainer>
@@ -166,18 +173,20 @@ const Checkout = () => {
                         <CheckoutItemsContainer>
                             <CheckoutItems>
                                 {
-                                    cartItems.map((item) => {
-                                        return <CheckoutItem key={item.id_producto} {...item} />;
+                                    productosCarrito?.map((item, index) => {
+                                        return <CheckoutItem key={`${item.id_producto}-${index}`} {...item} isLoading={isLoading}/>;
                                     })
                                 }
                             </CheckoutItems>
                         </CheckoutItemsContainer>
-                        <CheckoutDivider />
                         <CheckoutPrice>
                             <h4>Total:</h4>
-                            <span>${formatPrice(totalPrice)}</span>
+                            {
+                                !isLoading ? <span>${formatPrice(precioTotal)}</span> : <span><Skeleton width={100}/></span>
+                            }
+                            
                         </CheckoutPrice>
-                        <CheckoutTarjetasWrapper>
+                        {/* <CheckoutTarjetasWrapper>
                             <span>Tarjetas disponibles</span>
                             <CheckoutTarjetas>
                                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Visa_Logo.png/640px-Visa_Logo.png" />
@@ -185,7 +194,7 @@ const Checkout = () => {
                                 <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Naranja_X.png" />
                             </CheckoutTarjetas>
                             <p>Condiciones:</p>
-                        </CheckoutTarjetasWrapper>
+                        </CheckoutTarjetasWrapper> */}
                         
                         <div style={{display: 'flex', gap: '15px', alignItems: 'center', padding: '40px 0 20px 0'}}>
                             <div style={{display: 'flex', gap: '5px', alignItems: 'center'}}>
@@ -261,7 +270,7 @@ const Checkout = () => {
                                                 Total con interés: ${formatPrice(totalConInteres)}
                                             </span>
                                         ) : (
-                                            <span>1 cuota de ${formatPrice(totalPrice)}</span>
+                                            <span>1 cuota de ${formatPrice(precioTotal)}</span>
                                         )}
                                     </CheckoutFormaPagoItem>                
                             </CheckoutFormaPagoWrapper>
@@ -310,7 +319,7 @@ const Checkout = () => {
                                                     Total con interés: ${formatPrice(totalConInteres)}
                                                 </span>
                                             ) : (
-                                                <span>1 cuota de ${formatPrice(totalPrice)}</span>
+                                                <span>1 cuota de ${formatPrice(precioTotal)}</span>
                                             )}
                                         </CheckoutFormaPagoItem>
                                     </>
@@ -322,7 +331,7 @@ const Checkout = () => {
                                                 data={[
                                                     { value: 1, label: '1 cuota (Sin interés)' },
                                                     { value: 3, label: '3 cuotas (8% interés)' },
-                                                    { value: 6, label: '6 cuotas (20% interés)' },
+                                                    { value: 6, label: '6 cuotas (17% interés)' },
                                                     { value: 9, label: '9 cuotas (25% interés)' },
                                                     { value: 12, label: '12 cuotas (34% interés)' }
                                                 ]}
@@ -342,7 +351,7 @@ const Checkout = () => {
                                                     Total con interés: ${formatPrice(totalConInteres)}
                                                 </span>
                                             ) : (
-                                                <span>1 cuota de ${formatPrice(totalPrice)}</span>
+                                                <span>1 cuota de ${formatPrice(precioTotal)}</span>
                                             )}
                                         </CheckoutFormaPagoItem>
                                     </>
@@ -350,8 +359,6 @@ const Checkout = () => {
                                 
                             </CheckoutFormaPagoWrapper>
                         )}
-                        
-                        <CheckoutDivider />
                         <CheckoutButtons>
                             <Button
                                 background="red"

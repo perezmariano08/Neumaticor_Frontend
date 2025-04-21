@@ -6,9 +6,10 @@ export const NavbarTopContainerStyled = styled.nav`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--black);
+    background-color: var(--black-900);
     height: 40px;
     width: 100%;
+    
     @media (max-width: 968px) {
         display: none;
     }
@@ -23,30 +24,31 @@ export const NavbarTopWrapper = styled.div`
     max-width: 1260px;
     padding: 0 30px;
     gap: 5px;
+
+    p {
+        color: var(--white-50);
+    }
 `
 
 export const NavbarTopItems = styled.div`
     display: flex;
     align-items: center;
     gap: 25px;
-    
-    span {
-        font-weight: 200;
-        color: var(--white);
-        padding-bottom: 3px;
-    }
-
-    .number {
-        padding-bottom: 1px;
-    }
 `
 
 export const NavbarTopItem = styled(NavLink)`
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 6px;
 
-    .icon {
+    p {
+        padding-bottom: 3px;
+        &.number {
+            padding-bottom: 1px;
+        }
+    }
+
+    svg {
         color: var(--yellow);
     }
 `
@@ -55,6 +57,7 @@ export const NavbarTopSocial = styled.div`
     display: flex;
     align-items: center;
     gap: 10px;
+
     .icon {
         color: var(--white);
     }
@@ -82,9 +85,14 @@ export const NavbarWrapper = styled.div`
     justify-content: space-between;
     width: 100%;
     height: 100%;
-    max-width: 1260px;
-    padding: 0 30px;
+    max-width: 1230px;
+    padding: 0 15px;
+    gap: 40px;
     
+    input {
+        width: 100%;
+    }
+
     .menu-icon {
         display: none;
         cursor: pointer;
@@ -92,6 +100,19 @@ export const NavbarWrapper = styled.div`
             display: flex;
             font-size: 25px;
         }
+    }
+`
+
+export const NavbarBusqueda = styled.div`
+    display: flex;
+    width: 100%;
+
+    input {
+        width: 100%;
+    }
+
+    @media (max-width: 768px) {
+        display: none;
     }
 `
 export const NavbarLogo = styled(motion.a)`
@@ -116,7 +137,7 @@ export const NavbarList = styled.ul`
 `
 
 export const NavLinkStyled = styled(NavLink)`
-    color: var(--black);
+    color: var(--text);
     font-size: 16px;
     text-transform: uppercase;
     font-weight: 300;
@@ -130,19 +151,18 @@ export const NavbarIcons = styled.div`
     align-items: center;
     justify-content: end;
     gap: 20px;
-    color: var(--white);
+    color: var(--black-50);
     font-size: 18px;
     font-weight: 200;
     position: relative;
-    min-width: 200px;
 
     svg {
-        color: var(--black);
+        color: var(--black-900);
     }
 `
 
 export const OpenModalMenu = styled(motion.div)`
-    color: var(--black);
+    color: var(--black-900);
     display: flex;
     align-items: center;
     border-radius: 5px;

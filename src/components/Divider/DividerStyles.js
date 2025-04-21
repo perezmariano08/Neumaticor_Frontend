@@ -3,5 +3,5 @@ import styled from 'styled-components'
 export const DividerStyled = styled.div`
     height: 1px;
     width: 100%;
-    background-color: var(--gray-200);
+    background-color: var(--black-100);
 `

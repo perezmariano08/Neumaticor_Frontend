@@ -1,14 +1,15 @@
 import { ProductButtons, ProductCardInfo, ProductCardWrapper, ProductImg, ProductTitle } from './ProductCardStyles'
-import Button from '../../../components/UI/Button/Button'
-import { formatPrice } from '../../../utils/formatPrice';
+import Button from '../UI/Button/Button'
+import { formatPrice } from '../../utils/formatPrice';
 import { useDispatch, useSelector} from 'react-redux';
-import { addToCart} from '../../../redux/cart/cartSlice';
+import { addToCart} from '../../redux/cart/cartSlice';
 import { useNavigate } from 'react-router-dom';
-import { useToast } from '../../../context/ToastContext';
+import { useToast } from '../../context/ToastContext';
 import { useState } from 'react';
 import { ProgressSpinner } from 'primereact/progressspinner';
-import { IMAGES_URL } from '../../../utils/constants';
+import { IMAGES_URL } from '../../utils/constants';
 import { HiOutlineShoppingCart } from "react-icons/hi2";
+import { FaEye } from 'react-icons/fa6';
 
 const ProductCard = ({producto}) => {   
     const user = useSelector((state) => state.user.user); // Obtener el estado del usuario desde Redux   
@@ -21,9 +22,14 @@ const ProductCard = ({producto}) => {
 
     const añadirProducto = () => {
         setLoading(true); // Activar loader
+        // Armamos el objeto con los campos deseados
+        const itemCart = {
+            id_producto: producto.id_producto,
+        };
+
         // Simula un proceso asíncrono
         setTimeout(() => {
-            dispatch(addToCart(producto));
+            dispatch(addToCart({product: itemCart}));
             toast.current.show({
                 severity: 'success',
                 summary: 'Producto agregado',
@@ -36,21 +42,23 @@ const ProductCard = ({producto}) => {
 
     return (
         <ProductCardWrapper>
-            <ProductImg onClick={() => navigate(`/productos/${producto.id_producto}`)}>
-                <img src={`${IMAGES_URL}/productos/automovil/prestiva.png`} className='producto'/>
-                <img src={`${IMAGES_URL}/marcas/${producto.marca.toLowerCase()}.png`} className='marca'/>
+            <ProductImg 
+                // onClick={() => navigate(`/productos/${producto.id_producto}`)}
+                title={producto.descripcion}>
+                <img alt={producto.img} src={producto.img ? `${IMAGES_URL}/productos/${producto.marca.toLowerCase()}/${producto.vehiculo.toLowerCase()}/${producto.img.toLowerCase()}` : `${IMAGES_URL}/images/imagen-no-disponible.png`} className='producto'/>
+                <img src={producto.img && `${IMAGES_URL}/marcas/${producto.marca.toLowerCase()}.png`} className='marca'/>
             </ProductImg>
             <ProductCardInfo>
                 <ProductTitle>
                     <span>{producto.marca} / {producto.vehiculo}</span>
-                    <h3>{producto.descripcion}</h3>
+                    <h2>{producto.descripcion}</h2>
                 </ProductTitle>
-                <h4>{`$ ${formatPrice(user ? producto.precio_cuenta : producto.precio)}`}</h4>
+                <p className='price'>{`$ ${formatPrice(user ? producto.precio : producto.precio)}`}</p>
                 <ProductButtons>
-                    {/* <Button width='100%' background="black" color='yellow' onClick={() => navigate(`/productos/${producto.id_producto}`)}>
-                        <FaEye/>
+                    {/* <Button width='100%' background="black" color='white-0' onClick={() => navigate(`/productos/${producto.id_producto}`)}>
+                        <FaEye />
                         <span>ver</span>
-                    </Button> */}
+                    </Button>  */}
                     <Button width='100%' onClick={añadirProducto} disabled={loading}>
                         {loading ? (
                             <>

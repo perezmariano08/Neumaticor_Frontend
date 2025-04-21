@@ -23,7 +23,6 @@ export const CheckoutTitle = styled.h3`
 export const CheckoutItemsContainer = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 10px;
     overflow-y: hidden;
 `
 

@@ -11,7 +11,7 @@ export const ButtonWrapper = styled(motion.button)`
     width: ${({ width }) => `${width}`};
     color: ${({ color }) => `var(--${color})`};
     padding: 8px 16px;
-    border-radius: 20px;
+    border-radius: 10px;
     font-size: 14px;
     text-transform: uppercase;
     cursor: pointer;

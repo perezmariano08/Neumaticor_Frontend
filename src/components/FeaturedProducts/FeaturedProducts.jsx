@@ -1,6 +1,6 @@
 import { FeaturedProductsContainer, FeaturedProductsWrapper, ProductsContainer } from "./FeaturedProductsStyles"
-import ProductCard from '../../pages/Productos/ProductCard/ProductCard'
 import { useProductosDestacados } from "../../hooks/api/useProductos";
+import ProductCard from "../ProductCard/ProductCard";
 
 const FeaturedProducts = () => {
     // Obtener el estado de los productos desde el store

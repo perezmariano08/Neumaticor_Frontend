@@ -7,8 +7,7 @@ export const ContainerStyled = styled.div`
 
 export const WrapperStyled = styled.div`
     display: flex;
-    justify-content: center;
     width: 100%;
-    max-width: 1260px;
-    padding: 0 30px;
+    max-width: 1230px;
+    padding: 0 15px;
 `

@@ -19,7 +19,6 @@ const ProductosFiltro = ({ brands, onFilterChange, titulo }) => {
 
     return (
         <FiltroItem>
-            <span>{titulo}</span>
             <FiltroCheckboxItems>
                 {brands.map((brand) => (
                 <InputCheck

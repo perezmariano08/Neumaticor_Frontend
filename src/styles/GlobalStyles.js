@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components"
+import { FONTS_URL } from "../utils/constants"
 export const GlobalStyles = createGlobalStyle`
     :root {
         --red: #BC0000;
@@ -12,7 +13,36 @@ export const GlobalStyles = createGlobalStyle`
         --gray-500: #464C52;
         --gray-600: #26282B;
         --gray-700: #1B1D1F;
+
+        /* GrayScale */
+        --white-0: #FDFDFD;
+        --white-50: #F0F0F0;
+        --white-100: #E4E4E4;
+        --white-200: #D7D7D7;
+        --white-300: #CACACA;
+        --white-400: #BDBDBD;
+        --white-500: #B0B0B0;
+        --white-600: #A4A4A4;
+        --white-700: #979797;
+        --white-800: #8A8A8A;
+        --white-900: #7E7E7E;
+        --black-0: #71716F;
+        --black-50: #656563;
+        --black-100: #575757;
+        --black-200: #4A4A4A;
+        --black-300: #3D3D3D;
+        --black-400: #303030;
+        --black-500: #242424;
+        --black-600: #171717;
+        --black-700: #0A0A0A;
+        --black-800: #050505;
+        --black-900: #000000;
+
+        
+
+        --text: #1a1a1a;
         --yellow: #FED602;
+        --yellow-10: rgba(255, 214, 2, 0.1); /* 10% de opacidad */
         --black: #101010;
     }
 
@@ -30,28 +60,28 @@ export const GlobalStyles = createGlobalStyle`
 
     @font-face {
         font-family: 'Neumaticor';
-        src: local('Neumaticor Light'), url(/uber-font/UberMoveAR-Light.ttf) format('truetype');
+        src: local('Neumaticor Light'), url(${FONTS_URL}/neumaticor-font/Neumaticor-Light.woff2) format('woff2');
         font-weight: 100;
         font-style: normal;
     }
 
     @font-face {
         font-family: 'Neumaticor';
-        src: local('Neumaticor Regular'), url(/uber-font/UberMoveAR-Regular.ttf) format('truetype');
+        src: local('Neumaticor Regular'), url(${FONTS_URL}/neumaticor-font/Neumaticor-Regular.woff2) format('woff2');
         font-weight: 200;
         font-style: normal;
     }
 
     @font-face {
         font-family: 'Neumaticor';
-        src: local('Neumaticor Medium'), url(/uber-font/UberMoveAR-Medium.ttf) format('truetype');
+        src: local('Neumaticor Medium'), url(${FONTS_URL}/neumaticor-font/Neumaticor-Medium.woff2) format('woff2');
         font-weight: 300;
         font-style: normal;
     }
 
     @font-face {
         font-family: 'Neumaticor';
-        src: local('Neumaticor Bold'), url(/uber-font/UberMoveAR-Bold.ttf) format('truetype');
+        src: local('Neumaticor Bold'), url(${FONTS_URL}/neumaticor-font/Neumaticor-Bold.woff2) format('woff2');
         font-weight: 400;
         font-style: normal;
     }
@@ -72,7 +102,7 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     body {
-        background-color: var(--white);
+        background-color: var(--white-50);
     }
 
     * {
@@ -141,7 +171,7 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     p {
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 200;
         line-height: normal;
     }
@@ -280,4 +310,54 @@ export const GlobalStyles = createGlobalStyle`
         border-color: var(--yellow);
     }
 
+
+    .p-accordion {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .p-accordion {
+            .p-highlight {
+                
+            }
+        }
+
+        .p-accordion-header-link {
+            padding: 12px 16px;
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: space-between;
+            background-color: var(--white-0);
+
+            &.p-highlight {
+                background-color: var(--red);
+            }
+
+            .p-accordion-content {
+                width: 100%;
+            }
+        }
+    }
+
+    .p-dropdown-items-wrapper {
+        .p-dropdown-items {
+            .p-dropdown-item {
+                padding: 8px 16px;
+                font-weight: 300;
+                color: var(--black-900);
+                border: none !important;
+                font-size: 14px;
+
+                &.p-highlight {
+                    background-color: var(--yellow-10);
+                    color: var(--black-900);
+                }
+
+                &:hover {
+                    border: none;
+                }
+            }
+        }
+    }
+    
 `

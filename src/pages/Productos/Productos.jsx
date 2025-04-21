@@ -200,11 +200,11 @@ const Productos = () => {
                         <Filtros>
                             <FiltroOrden>
                                 <InputText 
-                                name="busqueda"
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                                placeholder="¿Qué estas buscando?"
-                            />
+                                    name="busqueda"
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    placeholder="¿Qué estas buscando?"
+                                />
                             </FiltroOrden>
                             <FiltroOrden>
                                 <p><RiArrowUpDownLine/>Ordenar por:</p>

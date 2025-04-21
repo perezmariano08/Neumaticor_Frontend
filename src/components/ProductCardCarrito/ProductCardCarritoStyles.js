@@ -9,7 +9,10 @@ export const ProductCardCarritoWrapper = styled.article`
     background-color: var(--white-0);
     border: ${(props) => (props.profile ? 'none' : '1px solid var(--white-100)')};
     border-bottom: ${(props) => (props.profile ? '1px solid var(--white-100)' : 'none')};
-
+    
+    @media (max-width: 768px) {
+        flex-direction: column;
+    }
 `
 
 export const ProductCardCarritoMain = styled.div`
@@ -63,6 +66,11 @@ export const ProductCardButtons = styled.div`
     svg {
         font-size: 16px;
         cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+        width: 100%;
+        justify-content: end;
     }
 `
 

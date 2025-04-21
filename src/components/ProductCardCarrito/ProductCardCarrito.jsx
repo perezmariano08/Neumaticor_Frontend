@@ -70,7 +70,6 @@ const ProductCardCarrito = ({isLoading, profile, id_producto, descripcion, marca
                 <BsTrash3  onClick={() => dispatch(removeItem(id_producto))} />
             </ProductCardButtons>
             }
-            
         </ProductCardCarritoWrapper>
     )
 }

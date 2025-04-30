@@ -46,7 +46,7 @@ const CuentaPedidos = () => {
                                         ?.filter((pe) => pe.id_pedido === p.id_pedido)
                                         .map((pe) => (
                                             <CuentaPedidoProductoCard key={pe.id_oroducto}>
-                                                <img alt={pe.img} src={pe.img ? `${IMAGES_URL}/productos/${pe.marca.toLowerCase()}/${pe.vehiculo.toLowerCase()}/${pe.img.toLowerCase()}` : `${IMAGES_URL}/images/imagen-no-disponible.png`} className='producto'/>
+                                                <img alt={pe.img} src={pe.img ? `${IMAGES_URL}/productos/${pe.marca.toLowerCase().replace(/\s+/g, '-')}/${pe.img.toLowerCase()}` : `${IMAGES_URL}/images/imagen-no-disponible.png`} className='producto'/>
                                                 <CuentaPedidoProductoCardTexto>
                                                     <h2>{pe.descripcion}</h2>
                                                     <p>{pe.cantidad}x  ${formatPrice(pe.precio_unitario)}</p>

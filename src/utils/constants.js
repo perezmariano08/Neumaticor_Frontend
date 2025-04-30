@@ -5,7 +5,7 @@ export const IMAGES_URL = 'https://darkslategrey-dragonfly-873689.hostingersite.
 export const FONTS_URL = 'https://darkslategrey-dragonfly-873689.hostingersite.com/uploads/fonts';
 export const API_URL = 'http://localhost:3001';
 
-export const URL_API = 'apineumaticor-perezmariano08s-projects.vercel.app/api/';
+export const URL_API = 'https://apineumaticor.vercel.app/api/';
 // export const URL_API = 'http://localhost:3001/api/';
 
 

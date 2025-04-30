@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 
 export const useUsuarios = () => {
     const token = useSelector((state) => state.user.token);
+    console.log(token);
     
     return useQuery({
         queryKey: ["usuarios"],

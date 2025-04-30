@@ -29,3 +29,12 @@ export const InputTextStyled = styled(InputText)`
     }
 
 `
+
+
+export const InputTextWrapperStyled = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+`
+

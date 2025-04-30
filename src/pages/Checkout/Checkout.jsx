@@ -22,7 +22,6 @@ import {
 } from "./CheckoutStyles";
 import { clearCart } from "../../redux/cart/cartSlice";
 import CheckoutItem from "./CheckoutItem";
-import Select from "../../components/UI/Select/Select";
 import { useMemo, useState } from "react";
 import Input from "../../components/UI/Input/Input";
 import useForm from "../../hooks/useForm";
@@ -235,30 +234,10 @@ const Checkout = () => {
                             <CheckoutFormaPagoWrapper>
                                 <CheckoutFormaPagoItem>
                                     <p>Tarjeta:</p>
-                                    <Select
-                                        name={'tarjeta'}
-                                        data={[
-                                            { value: 'visa', tarjeta: 'VISA' },
-                                            { value: 'master', tarjeta: 'MASTERCARD' },
-                                        ]}
-                                        id_={'value'}
-                                        column='tarjeta'
-                                        onChange={handleFormChange}
-                                        value={formState.tarjeta} // El valor seleccionado del radio button se refleja aquí
-                                    />
                                 </CheckoutFormaPagoItem>
                                     <CheckoutFormaPagoItem>
                                         <p>Cuotas:</p>
-                                        <Select
-                                            name={'cuotas'}
-                                            data={[
-                                                { value: 1, label: '1 cuota (Sin interés)' }
-                                            ]}
-                                            id_={'value'}
-                                            column='label'
-                                            onChange={handleFormChange}
-                                            value={formState.cuotas}
-                                        />
+
                                     </CheckoutFormaPagoItem>
                                     
                                     {/* Mostrar información de cargos a realizar */}
@@ -279,36 +258,14 @@ const Checkout = () => {
                             <CheckoutFormaPagoWrapper>
                                 <CheckoutFormaPagoItem>
                                     <p>Tarjeta:</p>
-                                    <Select
-                                        name={'tarjeta'}
-                                        data={[
-                                            { value: 'visa', tarjeta: 'VISA' },
-                                            { value: 'master', tarjeta: 'MASTERCARD' },
-                                            { value: 'nx', tarjeta: 'NARANJA X' },
-                                        ]}
-                                        id_={'value'}
-                                        column='tarjeta'
-                                        onChange={handleFormChange}
-                                        value={formState.tarjeta} // El valor seleccionado del radio button se refleja aquí
-                                    />
+                                    
                                 </CheckoutFormaPagoItem>
                                 {
                                     formState.tarjeta === "nx" 
                                     ? <>
                                         <CheckoutFormaPagoItem>
                                             <p>Cuotas:</p>
-                                            <Select
-                                                name={'cuotas'}
-                                                data={CuotasNx}
-                                                id_={'value'}
-                                                column='label'
-                                                onChange={handleFormChange}
-                                                value={
-                                                    CuotasNx.some(option => option.value == formState.cuotas)
-                                                        ? formState.cuotas
-                                                        : 1
-                                                }
-                                            />
+                                          
                                         </CheckoutFormaPagoItem>
                                         {/* Mostrar información de cargos a realizar */}
                                         <CheckoutFormaPagoItem className="cargos">
@@ -326,20 +283,7 @@ const Checkout = () => {
                                     : <>
                                         <CheckoutFormaPagoItem>
                                             <p>Cuotas:</p>
-                                            <Select
-                                                name={'cuotas'}
-                                                data={[
-                                                    { value: 1, label: '1 cuota (Sin interés)' },
-                                                    { value: 3, label: '3 cuotas (8% interés)' },
-                                                    { value: 6, label: '6 cuotas (17% interés)' },
-                                                    { value: 9, label: '9 cuotas (25% interés)' },
-                                                    { value: 12, label: '12 cuotas (34% interés)' }
-                                                ]}
-                                                id_={'value'}
-                                                column='label'
-                                                onChange={handleFormChange}
-                                                value={formState.cuotas}
-                                            />
+                                            
                                         </CheckoutFormaPagoItem>
                                         
                                         {/* Mostrar información de cargos a realizar */}

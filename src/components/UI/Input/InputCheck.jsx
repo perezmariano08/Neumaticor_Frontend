@@ -1,15 +1,15 @@
 import React from 'react'
 import { InputCheckWrapper } from './InputSyles'
-import { Checkbox } from 'primereact/checkbox';
+import { CheckboxStyled } from './InputCheckboxStyles';
 
-const InputCheck = ({checked, onChange, brand}) => {
+const InputCheck = ({checked, onChange, brand, name, value}) => {
     return (
         <InputCheckWrapper key={brand} onClick={onChange}>
 
-            <Checkbox 
-                inputId="ingredient1" 
-                name="pizza" 
-                value="Cheese" 
+            <CheckboxStyled 
+                inputId={brand}
+                name={name} 
+                value={value} 
                 onChange={onChange} checked={checked} 
             />
 

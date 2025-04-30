@@ -5,6 +5,7 @@ export const GlobalStyles = createGlobalStyle`
         --red: #BC0000;
         --blue: #000E1B;
         --green: #57D163;
+        --green-10: #57D16310;
         --white: #fafafa;
         --gray-100: #e9ebed;
         --gray-200: #CACDD2;
@@ -328,6 +329,13 @@ export const GlobalStyles = createGlobalStyle`
             flex-direction: row-reverse;
             justify-content: space-between;
             background-color: var(--white-0);
+
+            .p-accordion-header-text {
+                font-size: 16px;
+                line-height: 16px;
+                font-weight: 300;
+                color: var(--black-900);
+            }
 
             &.p-highlight {
                 background-color: var(--red);

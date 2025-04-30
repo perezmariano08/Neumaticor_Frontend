@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchProducto, fetchProductos, fetchProductosConPrecio, fetchProductosDestacados } from "../../api/productos";
+import { fetchMarcas, fetchProducto, fetchProductos, fetchProductosConPrecio, fetchProductosDestacados } from "../../api/productos";
 import { useSelector } from 'react-redux';
 
 export const useProductos = () => {
@@ -36,3 +36,10 @@ export const useProductosConPrecio = (idProducto) => {
     });
 };
 
+export const useMarcas = () => {
+    return useQuery({
+        queryKey: ["marcas"],
+        queryFn: fetchMarcas,
+        staleTime: 1000 * 60 * 0.5, // Caché de 5 minutos
+    });
+};

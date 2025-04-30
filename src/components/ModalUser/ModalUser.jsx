@@ -3,7 +3,7 @@ import { ModalUserWrapper } from './ModalUserStyles'
 import Button from '../UI/Button/Button';
 import { logout } from '../../redux/user/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const ModalUser = () => {
     const dispatch = useDispatch()
@@ -18,6 +18,7 @@ const ModalUser = () => {
     return (
         <ModalUserWrapper>
             <p>{user?.nombre}</p>
+            <NavLink to={'/cuenta'}>Mi cuenta</NavLink>
             <Button background='black' color='white' onClick={handleLogout}>Cerrar Sesion</Button>
         </ModalUserWrapper>
     )

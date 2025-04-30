@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { ProfileContainer, ProfileMain, ProfilePasoDetalleMetodo, ProfilePasoForm, ProfilePasoInputWrapper, ProfilePasoMetodoPago, ProfilePasoMetodoPagoWrapper, ProfilePasoPagosWrapper, ProfilePasoRetiroWrapper, ProfilePasoSucursal, ProfilePasoSucursalWrapper, ProfilePasosWrapper, ProfilePasoTarjetaWrapper, ProfilePasoTitulo, ProfilePasoWrapper, ProfileWrapper } from './ProfileStyles'
 import NavegacionPages from '../../components/NavegacionPages/NavegacionPages'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { LiaAngleLeftSolid, LiaAngleRightSolid } from 'react-icons/lia'
 import InputText from '../../components/UI/InputText/InputText'
 import { BsCreditCard2Back } from "react-icons/bs";
@@ -11,42 +11,63 @@ import Button from '../../components/UI/Button/Button'
 import ProductCardCarrito from '../../components/ProductCardCarrito/ProductCardCarrito'
 import useForm from '../../hooks/useForm'
 import { CuotasNx, CuotasTarjeta, IMAGES_URL } from '../../utils/constants'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useProductosConPrecio } from '../../hooks/api/useProductos'
 import { FaWhatsapp } from 'react-icons/fa6'
 import { finalizarPedido } from '../../utils/finalizarPedido'
 import Skeleton from 'react-loading-skeleton'
+import { validateEmail } from '../../utils/validarEmail'
+import { clearCart } from '../../redux/cart/cartSlice'
 
 const Profile = () => {
-    const [formErrors, setFormErrors] = useState({});
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
     const cartItems = useSelector(state => state.cart.cartItems);
-    const user = useSelector((state) => state.user.user); // Obtener el estado del usuario desde Redux
+    
+    if (!cartItems?.length > 0) {
+        navigate('/carrito')
+    }
 
+    const [formErrors, setFormErrors] = useState({});
+    const user = useSelector((state) => state.user.user); // Obtener el estado del usuario desde Redux
+    
+    
     // Manejo del form
     const [formState, handleFormChange, resetForm, setFormState] = useForm({ 
         nombre: '',
         apellido: '',
         dni: '',
+        email: '',
         telefono: '',
         metodoPago: 'efectivo / transferencia',
         tarjeta: '',
         cuotas: ''
     });
 
+    
+
     const validarCampos = () => {
         const errores = {};
     
         if (!formState.nombre.trim()) errores.nombre = 'Este campo es obligatorio';
         if (!formState.apellido.trim()) errores.apellido = 'Este campo es obligatorio';
+
+        
         if (!user) {
             if (!formState.dni.trim()) errores.dni = 'Este campo es obligatorio';
         }
+
+        // Validar Email
+        if (!formState.email.trim()) {
+            errores.email = 'Este campo es obligatorio';
+        } else if (!validateEmail(formState.email)) {
+            errores.email = 'Email inválido';
+        }
+
         if (!formState.metodoPago.trim()) errores.metodoPago = 'Este campo es obligatorio';
         if (formState.metodoPago === 'debito' || formState.metodoPago === 'credito') {
             if (!formState.tarjeta.trim()) errores.tarjeta = 'Este campo es obligatorio';
         }
-
-
     
         if (formState.metodoPago === 'credito') {
             if (!formState.cuotas) errores.cuotas = 'Este campo es obligatorio';
@@ -61,6 +82,8 @@ const Profile = () => {
         if (validarCampos()) {
             // Continuar con el proceso (WhatsApp, etc.)
             finalizarPedido(formState, productosCarrito, precioTotal, totalConInteres, cuotas, user, tieneFate, tienePirelli); 
+            navigate('/cuenta')
+            dispatch(clearCart())
         } else {
             console.log('Formulario con errores');
         }
@@ -105,7 +128,6 @@ const Profile = () => {
 
     const [cuotasDisponibles, setCuotasDisponibles] = useState([]);
 
-    console.log(cuotasDisponibles);
     
     // Manejar cambio de tarjeta
     const handleTarjetaChange = (tarjetaObj) => {
@@ -150,7 +172,6 @@ const Profile = () => {
     const cuotas = cuotasDisponibles.find(cuota => cuota.value === formState.cuotas);
 
 
-    console.log(productosCarrito);
     
     const tieneFate = productosCarrito?.some(producto => producto.marca === "FATE");
     const tienePirelli = productosCarrito?.some(producto => producto.marca === "PIRELLI");
@@ -206,6 +227,30 @@ const Profile = () => {
                                         placeholder="Escriba su apellido"
                                         error={formErrors.apellido}
                                         disabled={user}
+                                    />
+                                </ProfilePasoInputWrapper>
+                                <ProfilePasoInputWrapper>
+                                    <p>DNI: *</p>
+                                    <InputText 
+                                        name="apellido"
+                                        value={formState.apellido}
+                                        onChange={handleFormChange}
+                                        placeholder="Escriba su apellido"
+                                        error={formErrors.apellido}
+                                        disabled={user}
+                                        keyfilter="int"
+                                    />
+                                </ProfilePasoInputWrapper>
+                                <ProfilePasoInputWrapper>
+                                    <p>Email: *</p>
+                                    <InputText 
+                                        name="email"
+                                        value={formState.email}
+                                        onChange={handleFormChange}
+                                        placeholder="Escriba su email"
+                                        error={formErrors.email}
+                                        disabled={user}
+                                        keyfilter="email"
                                     />
                                 </ProfilePasoInputWrapper>
                                 

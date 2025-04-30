@@ -1,7 +1,7 @@
 import React from 'react'
 import { InputTextStyled } from './InputTextStyles'
 
-const InputText = ({ name, value, onChange, placeholder, required, error, disabled, type}) => {
+const InputText = ({ name, value, onChange, placeholder, required, error, disabled, type, keyfilter, validateOnly, onInput, min, max}) => {
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' , width: '100%'}}>
             <InputTextStyled
@@ -13,6 +13,11 @@ const InputText = ({ name, value, onChange, placeholder, required, error, disabl
                 placeholder={placeholder}
                 className={error ? 'p-invalid' : ''}
                 type={type}
+                keyfilter={keyfilter}
+                validateOnly={validateOnly}
+                onInput={onInput}
+                min={min}
+                max={max}
             />
             {error && <span style={{ color: 'red', fontSize: '12px' , fontWeight: '200'}}>{error}</span>}
         </div>

@@ -45,8 +45,8 @@ const ProductCard = ({producto}) => {
             <ProductImg 
                 // onClick={() => navigate(`/productos/${producto.id_producto}`)}
                 title={producto.descripcion}>
-                <img alt={producto.img} src={producto.img ? `${IMAGES_URL}/productos/${producto.marca.toLowerCase()}/${producto.vehiculo.toLowerCase()}/${producto.img.toLowerCase()}` : `${IMAGES_URL}/images/imagen-no-disponible.png`} className='producto'/>
-                <img src={producto.img && `${IMAGES_URL}/marcas/${producto.marca.toLowerCase()}.png`} className='marca'/>
+                <img alt={producto.img} src={producto.img ? `${IMAGES_URL}/productos/${producto.marca.toLowerCase().replace(/\s+/g, '-')}/${producto.img.toLowerCase()}` : `${IMAGES_URL}/images/imagen-no-disponible.png`} className='producto'/>
+                <img src={producto.img && `${IMAGES_URL}/marcas/${producto.marca.toLowerCase().replace(/\s+/g, '-')}.png`} className='marca'/>
             </ProductImg>
             <ProductCardInfo>
                 <ProductTitle>

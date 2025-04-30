@@ -8,6 +8,7 @@ export const AsideContainerStyled = styled(motion.aside)`
     background-color: var(--black-900);
     font-size: 14px;
     z-index: 3;
+    position: fixed;
 
     @media (max-width: 968px) {
         width: 100%;
@@ -51,9 +52,11 @@ export const AsideUser = styled.div`
     }
 `
 
-export const AsideMenuWrapper = styled.ul`
-    overflow-y: auto;
-    max-height: calc(100vh - 51px);
+export const AsideMenuWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
 
     &::-webkit-scrollbar {
         width: 10px;
@@ -97,13 +100,13 @@ export const NavLinkItem = styled(motion(NavLink))`
     border-radius: 10px;
     cursor: pointer;
     z-index: 2;
-    color: var(--black-0);
+    color: var(--white-0);
     p {
         font-weight: 300;
     }
     
-    i, svg {
-        color: var(--black-0);
+    svg {
+        color: var(--white-0);
     }
 
 
@@ -131,6 +134,14 @@ export const NavLinkItem = styled(motion(NavLink))`
             color: var(--black-900);
         }
         color: var(--black-900);
+    }
+
+    &.logout {
+        background-color: var(--red);
+        color: var(--white-0);
+        svg {
+            color: var(--white-0);
+        }
     }
 `
 

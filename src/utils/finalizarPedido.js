@@ -1,7 +1,35 @@
-export const finalizarPedido = (formState, productosCarrito, precioTotal, totalConInteres, cuotas, user, tieneFate, tienePirelli) => {
+import axios from "axios";
+import { URL_API } from "./constants";
+
+export const finalizarPedido = async (formState, productosCarrito, precioTotal, totalConInteres, cuotas, user, tieneFate, tienePirelli) => {
     const mensaje = generarMensajeWhatsapp(formState, productosCarrito, precioTotal, totalConInteres, cuotas, user, tieneFate, tienePirelli);
+    console.log(user);
+    console.log(formState);
+    console.log(productosCarrito);
+
+    try {
+        const response = await axios.post(`${URL_API}pedidos/finalizar-pedido`, {
+            id_usuario: user.id_usuario,
+            total: precioTotal,
+            metodo_pago: formState.metodoPago,
+            productos: productosCarrito
+        });
+
+        const { success, message } = response.data;
+
+        if (success) {
+            alert("pedido existoso")
+        } else {
+            alert(`Error: ${message}`);
+        }
+
+    } catch (error) {
+        console.error('Error en el catch:', error);
+    } finally {
+    }
     const telefonoNegocio = '5493517649357'; // Reemplazar con el número del negocio
     const url = `https://wa.me/${telefonoNegocio}?text=${encodeURIComponent(mensaje)}`;
+    return
     window.open(url, '_blank');
 };
 

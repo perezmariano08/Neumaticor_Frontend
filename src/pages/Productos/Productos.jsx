@@ -2,19 +2,14 @@ import React, { useState } from 'react';
 import { AccordionContent, FiltroOrden, Filtros, ListaProductos, ListaProductosWrapper, ProductosFiltroWrapper, ProductosMain, ProductsContainerStyled, ProductsWrapper } from './ProductosStyles';
 import Button from '../../components/UI/Button/Button';
 import ProductosFiltro from '../../components/ProductosFiltro/ProductosFiltro';
-import Input from '../../components/UI/Input/Input';
-import { CgSearch } from 'react-icons/cg';
-import { useProductos, useProductosConPrecio } from '../../hooks/api/useProductos';
+import { useMarcas, useProductosConPrecio } from '../../hooks/api/useProductos';
 import { useSelector } from 'react-redux';
-import { BiFilterAlt } from "react-icons/bi";
 import SkeletonProductCard from '../../components/ProductCard/SkeletonProductCard';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import { Accordion, AccordionTab } from 'primereact/accordion';
 import NavegacionPages from '../../components/NavegacionPages/NavegacionPages';
 import { NavLink } from 'react-router-dom';
 import { LiaAngleRightSolid } from "react-icons/lia";
-import Inpu from '../../components/UI/Input/Inpu';
-import Select from '../../components/UI/Select/Select';
 import Dropdown from '../../components/UI/Dropdown/Dropdown';
 import { useSearchParams } from 'react-router-dom';
 import { RiArrowUpDownLine } from "react-icons/ri";
@@ -25,10 +20,16 @@ const Productos = () => {
     // const { data: productos, error, isLoading } = useProductos();
     const user = useSelector((state) => state.user.user); // Obtener el estado del usuario desde Redux   
     const{ data: productos, error, isLoading }  = useProductosConPrecio();
+    const{ data: marcas }  = useMarcas();
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const [value, setValue] = useState('');
-
+    console.log(marcas);
+    
+    // Filtros Accordion
+    const filtros = [
+        { tipo: 'marca', label: 'Marca', campo: 'marca' },
+        { tipo: 'vehiculo', label: 'Vehículo', campo: 'vehiculo' },
+    ];  
     
     const [visibleProducts, setVisibleProducts] = useState(12);
     const [filteredBrands, setFilteredBrands] = useState([]);
@@ -80,7 +81,7 @@ const Productos = () => {
                 return true;
             })
             .filter(product => {
-                return product.descripcion.toLowerCase().includes(searchTerm.toLowerCase());
+                return product.descripcion?.toLowerCase().includes(searchTerm.toLowerCase());
             })
         : [];
 
@@ -132,6 +133,14 @@ const Productos = () => {
                         <ListaProductosWrapper>
                             <Filtros>
                                 <FiltroOrden>
+                                    <InputText 
+                                        name="busqueda"
+                                        value={searchTerm}
+                                        onChange={(e) => setSearchTerm(e.target.value)}
+                                        placeholder="¿Qué estas buscando?"
+                                    />
+                                </FiltroOrden>
+                                <FiltroOrden>
                                     <p><RiArrowUpDownLine/>Ordenar por:</p>
                                     <Dropdown 
                                         value={order} 
@@ -173,28 +182,18 @@ const Productos = () => {
                 </NavegacionPages>
                 <ProductosMain>
                     <ProductosFiltroWrapper>
-                        <Accordion activeIndex={0} >
-                            <AccordionTab header="Marca">
-                                <AccordionContent>
-                                    <ProductosFiltro
-                                        brands={[...new Set(productos?.map(product => product.marca))]}
-                                        onFilterChange={(selectedBrands) => handleFilterChange(selectedBrands, 'marca')}
-                                        titulo={'Filtrar por marca'}
-                                    />
-                                </AccordionContent>
-                            </AccordionTab>
-                        </Accordion>
-                        <Accordion activeIndex={0} >
-                            <AccordionTab header="Vehiculo">
-                                <AccordionContent>
-                                    <ProductosFiltro
-                                        brands={[...new Set(productos?.map(product => product.vehiculo))]}
-                                        onFilterChange={(selectedVehicles) => handleFilterChange(selectedVehicles, 'vehiculo')}
-                                        titulo={'Filtrar por vehiculo'}
-                                    />
-                                </AccordionContent>
-                            </AccordionTab>
-                        </Accordion>
+                        {filtros?.map(({ tipo, label, campo }) => (
+                            <Accordion key={tipo} activeIndex={0}>
+                                <AccordionTab header={label}>
+                                    <AccordionContent>
+                                        <ProductosFiltro
+                                            brands={[...new Set(productos?.map(product => product[campo]))]}
+                                            onFilterChange={(selectedItems) => handleFilterChange(selectedItems, tipo)}
+                                        />
+                                    </AccordionContent>
+                                </AccordionTab>
+                            </Accordion>
+                        ))}
                     </ProductosFiltroWrapper>
                     <ListaProductosWrapper>
                         <Filtros>

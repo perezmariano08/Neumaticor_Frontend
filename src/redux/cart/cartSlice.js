@@ -33,14 +33,10 @@ const cartSlice = createSlice({
         },
         //Limpiar todo el  carrito
         clearCart: (state) => {
-            if(window.confirm('¿Desea vaciar el carrito de compras?')) {
-                return {
+            return {
                 ...state,
                 cartItems: [],
                 shippingCost: 0
-            } 
-            } else {
-
             }
         },
         //Toggle de apertura/cierre de carrito

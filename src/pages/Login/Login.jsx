@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';  // Importa el hook useNavigate
-import { LoginContainer, LoginWrapper, LoginForm, LoginInputWrapper, MensajeError } from './LoginStyles';
+import { Navigate, NavLink, useNavigate } from 'react-router-dom';  // Importa el hook useNavigate
+import { LoginContainer, LoginWrapper, LoginForm, LoginInputWrapper, MensajeError, LoginImagenWrapper, LoginFormWrapper, LoginButtonRegistrar } from './LoginStyles';
 import { useDispatch, useSelector } from 'react-redux'; // Importar useDispatch
 import { loginSuccess } from '../../redux/user/userSlice';
 import Button from '../../components/UI/Button/Button';
@@ -9,6 +9,7 @@ import { useAuthLogin } from '../../hooks/api/useAuth';
 import InputText from '../../components/UI/InputText/InputText';
 import { validateEmail } from '../../utils/validarEmail';
 import Password from '../../components/UI/Password/Password';
+import { IMAGES_URL } from '../../utils/constants';
 
 const Login = () => {
    // Redirigir a home en caso de que un usuario este logueado
@@ -37,7 +38,7 @@ const Login = () => {
             // Almacenar el usuario en Redux y redirigir
             dispatch(loginSuccess(response.user));
             if (response.user.isAdmin) {
-               navigate('/admin/dashboard')
+               navigate('/admin/usuarios')
             } else {
                navigate('/')
             }
@@ -75,43 +76,45 @@ const Login = () => {
    return (
       <LoginContainer>
          <LoginWrapper>
-            <h2>Iniciar sesión</h2>
-            
-            <LoginForm onSubmit={handleSubmit}>
-               <LoginInputWrapper>
-                  <label htmlFor="email">Correo electrónico</label>
-                  {/* <Input
-                     type="email"
-                     id="email"
-                     value={email}
-                     onChange={(e) => setEmail(e.target.value)}
-                     placeholder="Ingrese su correo"
-                  /> */}
-                  <InputText 
-                     name="nombre"
-                     value={email}
-                     onChange={(e) => setEmail(e.target.value)}
-                     placeholder="Ingrese su correo"
-                     error={formErrors.email}
-                     disabled={user}
-                  />
-               </LoginInputWrapper>
-               <LoginInputWrapper>
-                  <label htmlFor="password">Contraseña</label>
-                  <Password 
-                     name="password"
-                     value={password} 
-                     onChange={(e) => setPassword(e.target.value)} 
-                     feedback={false}
-                     toggleMask 
-                     placeholder="Ingrese su contraseña"
-                     error={formErrors.password}
-                  />
+            <LoginImagenWrapper imageUrl={`${IMAGES_URL}/images/login_wrapper.png`}>
+               <img src={`${IMAGES_URL}/images/logos/logotipo-blanco.png`} alt="" srcset="" />
+            </LoginImagenWrapper>
+            <LoginFormWrapper>
+               <h2>Iniciar sesión</h2>
+               
+               <LoginForm onSubmit={handleSubmit}>
+                  <LoginInputWrapper>
+                     <label htmlFor="email">Correo electrónico</label>
+                     <InputText 
+                        name="nombre"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Ingrese su correo"
+                        error={formErrors.email}
+                        disabled={user}
+                     />
+                  </LoginInputWrapper>
+                  <LoginInputWrapper>
+                     <label htmlFor="password">Contraseña</label>
+                     <Password 
+                        name="password"
+                        value={password} 
+                        onChange={(e) => setPassword(e.target.value)} 
+                        feedback={false}
+                        toggleMask 
+                        placeholder="Ingrese su contraseña"
+                        error={formErrors.password}
+                     />
 
-               </LoginInputWrapper>
-               {error && <MensajeError><p>{error}</p></MensajeError>}
-               <Button type="submit">Iniciar sesión</Button>
-            </LoginForm>
+                  </LoginInputWrapper>
+                  {error && <MensajeError><p>{error}</p></MensajeError>}
+                  <Button type="submit">Iniciar sesión</Button>
+                  <LoginButtonRegistrar>
+                     <p>¿No tenes una cuenta?</p><NavLink to='/registrar'>Registrate</NavLink>
+                  </LoginButtonRegistrar>
+               </LoginForm>
+            </LoginFormWrapper>
+            
          </LoginWrapper>
       </LoginContainer>
    );

@@ -16,5 +16,8 @@ export const LayoutAdminContainer = styled.main`
 export const LayoutAdminContent = styled.div`
     width: calc(100% - 16rem);
     display: flex;
+    flex-direction: column;
     padding: 20px;
+    gap: 20px;
+    margin-left: 16rem;
 `

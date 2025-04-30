@@ -27,12 +27,20 @@ export const fetchProductosConPrecio = async (idUsuario, idProducto) => {
         url += `/${idProducto}`;  // Si idProducto está presente, lo agregamos al path
     }
 
-    url += `?id_usuario=${idUsuario}`;  // Siempre agregamos el id_usuario a la query string
-
+    if (idUsuario) {
+        url += `?id_usuario=${idUsuario}`;  // Si idProducto está presente, lo agregamos al path
+    }
+    
     const res = await fetch(url, { 
         method: 'GET',
     });
 
     if (!res.ok) throw new Error("Error al cargar el producto con precios");
     return res.json(); // Devolvemos el producto con su precio
+};
+
+export const fetchMarcas = async () => {
+    const res = await fetch(`${URL_API}productos/marcas`);
+    if (!res.ok) throw new Error("Error al cargar los datos de marcas");
+    return res.json();
 };

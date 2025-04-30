@@ -1,11 +1,12 @@
 import React from 'react'
 import { DropdownStyled } from './DropdownStyles'
 
-const Dropdown = ({value, onChange, options, placeholder, optionLabel, optionValue, error}) => {
+const Dropdown = ({name, value, onChange, options, placeholder, optionLabel, optionValue, error}) => {
     return (
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', width: '100%'}}>
             <DropdownStyled
+            name={name}
                 value={value} 
                 onChange={onChange} 
                 options={options} optionLabel={optionLabel} optionValue={optionValue}

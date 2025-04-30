@@ -45,7 +45,7 @@ const ProductCardCarrito = ({isLoading, profile, id_producto, descripcion, marca
     return (
         <ProductCardCarritoWrapper profile={profile}>
             <ProductCardCarritoMain>
-                <img alt={img} src={img ? `${IMAGES_URL}/productos/${marca.toLowerCase()}/${vehiculo.toLowerCase()}/${img.toLowerCase()}` : `${IMAGES_URL}/images/imagen-no-disponible.png`} className='producto'/>
+                <img alt={img} src={img ? `${IMAGES_URL}/productos/${marca.toLowerCase().replace(/\s+/g, '-')}/${img.toLowerCase()}` : `${IMAGES_URL}/images/imagen-no-disponible.png`} className='producto'/>
                 <ProductCardCarritoDetalles>
                     <ProductCardCarritoDescripcion>
                         <span>{marca} / {vehiculo}</span>

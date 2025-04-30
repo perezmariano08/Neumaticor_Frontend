@@ -17,11 +17,13 @@ import { toggleHiddenMenu } from '../../redux/menu/menuSlice';
 import ModalUser from '../ModalUser/ModalUser';
 import { IMAGES_URL } from '../../utils/constants';
 import InputText from '../UI/InputText/InputText';
+import { useNavigate } from 'react-router-dom';
 
 
 
 const Navbar = () => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const [toggleModalUser, setToggleModalUser] = useState(false)
 
     const totalCartItems = useSelector((state) => 
@@ -30,6 +32,7 @@ const Navbar = () => {
     const [busqueda, setBusqueda] = useState('');
 
     const user = useSelector((state) => state.user.user);
+    console.log(user);
     
 
     return (
@@ -71,6 +74,9 @@ const Navbar = () => {
                             <li><NavLinkStyled to={'/productos'}>Productos</NavLinkStyled></li>
                             {!user && (
                                 <li><NavLinkStyled to="/login">Acceder</NavLinkStyled></li>
+                            )}
+                            {user.isAdmin && (
+                                <li><NavLinkStyled to="/admin/usuarios">Admin</NavLinkStyled></li>
                             )}
                         </NavbarList>
                         <IconCart whileTap={{scale: .85}} to={`/carrito`}>

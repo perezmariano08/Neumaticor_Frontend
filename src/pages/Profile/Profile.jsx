@@ -18,12 +18,16 @@ import { finalizarPedido } from '../../utils/finalizarPedido'
 import Skeleton from 'react-loading-skeleton'
 import { validateEmail } from '../../utils/validarEmail'
 import { clearCart } from '../../redux/cart/cartSlice'
+import { useToast } from '../../context/ToastContext'
+import { useQueryClient } from '@tanstack/react-query'
 
 const Profile = () => {
+    const toast = useToast(); // Usamos el hook para acceder al Toast
+    const queryClient = useQueryClient();
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const cartItems = useSelector(state => state.cart.cartItems);
-    
+    const [loading, setLoading] = useState(false)
     if (!cartItems?.length > 0) {
         navigate('/carrito')
     }
@@ -41,16 +45,18 @@ const Profile = () => {
         telefono: '',
         metodoPago: 'efectivo / transferencia',
         tarjeta: '',
-        cuotas: ''
+        cuotas: '',
+        codigo_postal: '',
+        direccion: ''
     });
-
-    
 
     const validarCampos = () => {
         const errores = {};
     
         if (!formState.nombre.trim()) errores.nombre = 'Este campo es obligatorio';
         if (!formState.apellido.trim()) errores.apellido = 'Este campo es obligatorio';
+        if (!formState.codigo_postal.trim()) errores.codigo_postal = 'Este campo es obligatorio';
+        if (!formState.direccion.trim()) errores.direccion = 'Este campo es obligatorio';
 
         
         if (!user) {
@@ -78,16 +84,17 @@ const Profile = () => {
         return Object.keys(errores).length === 0;
     };
 
-    const handleFinalizarPedido = () => {
+    const handleFinalizarPedido = async () => {
         if (validarCampos()) {
-            // Continuar con el proceso (WhatsApp, etc.)
-            finalizarPedido(formState, productosCarrito, precioTotal, totalConInteres, cuotas, user, tieneFate, tienePirelli); 
-            navigate('/cuenta')
-            dispatch(clearCart())
+            finalizarPedido(toast,formState, productosCarrito, precioTotal, totalConInteres, cuotas, user, tieneFate, tienePirelli);
+            await queryClient.invalidateQueries(["pedidosUsuario"]);
+            navigate('/cuenta/pedidos'); // Redirigimos al usuario a su cuenta // Una vez completado el proceso, realizamos las siguientes acciones:
+            dispatch(clearCart()); // Limpiamos el carrito
         } else {
             console.log('Formulario con errores');
         }
     };
+    
     
     
 
@@ -187,8 +194,7 @@ const Profile = () => {
             }));
         }
     }, [user]);
-    
-    
+
     return (
         <ProfileContainer>
             <ProfileWrapper>
@@ -230,18 +236,6 @@ const Profile = () => {
                                     />
                                 </ProfilePasoInputWrapper>
                                 <ProfilePasoInputWrapper>
-                                    <p>DNI: *</p>
-                                    <InputText 
-                                        name="apellido"
-                                        value={formState.apellido}
-                                        onChange={handleFormChange}
-                                        placeholder="Escriba su apellido"
-                                        error={formErrors.apellido}
-                                        disabled={user}
-                                        keyfilter="int"
-                                    />
-                                </ProfilePasoInputWrapper>
-                                <ProfilePasoInputWrapper>
                                     <p>Email: *</p>
                                     <InputText 
                                         name="email"
@@ -253,31 +247,6 @@ const Profile = () => {
                                         keyfilter="email"
                                     />
                                 </ProfilePasoInputWrapper>
-                                
-                                {
-                                    user ? <ProfilePasoInputWrapper>
-                                    <p>Email: *</p>
-                                    <InputText 
-                                        name="email"
-                                        value={formState.email}
-                                        onChange={handleFormChange}
-                                        placeholder="Escriba su email"
-                                        error={formErrors.email}
-                                        type="email"
-                                        disabled={user}
-                                    />
-                                </ProfilePasoInputWrapper> : <ProfilePasoInputWrapper>
-                                    <p>DNI: *</p>
-                                    <InputText 
-                                        name="dni"
-                                        value={formState.dni}
-                                        onChange={handleFormChange}
-                                        placeholder="Escriba su DNI"
-                                        error={formErrors.dni}
-                                    />
-                                </ProfilePasoInputWrapper>
-                                }
-                                
                             </ProfilePasoForm>
                         </ProfilePasoWrapper>
                         <ProfilePasoWrapper>
@@ -378,6 +347,34 @@ const Profile = () => {
                                 </ProfilePasoDetalleMetodo>
                             </ProfilePasoPagosWrapper>
                         </ProfilePasoWrapper>
+                        <ProfilePasoWrapper>
+                            <ProfilePasoTitulo>
+                                <h2>3. Envio</h2>
+                                <p>Solicitamos únicamente la información esencial para la finalización del pedido.</p>
+                            </ProfilePasoTitulo>
+                            <ProfilePasoForm>
+                                <ProfilePasoInputWrapper>
+                                    <p>Codigo Postal: *</p>
+                                    <InputText 
+                                        name="codigo_postal"
+                                        value={formState.codigo_postal}
+                                        onChange={handleFormChange}
+                                        placeholder="Codigo Postal"
+                                        error={formErrors.codigo_postal}
+                                    />
+                                </ProfilePasoInputWrapper>
+                                <ProfilePasoInputWrapper>
+                                    <p>Dirección: *</p>
+                                    <InputText 
+                                        name="direccion"
+                                        value={formState.direccion}
+                                        onChange={handleFormChange}
+                                        placeholder="Dirección"
+                                        error={formErrors.direccion}
+                                    />
+                                </ProfilePasoInputWrapper>                            
+                            </ProfilePasoForm>
+                        </ProfilePasoWrapper>
                         {
                             !user && <ProfilePasoWrapper>
                             <ProfilePasoTitulo>
@@ -442,7 +439,11 @@ const Profile = () => {
                             }
                             
                             <CarritoResumenButtons>
-                                <Button onClick={handleFinalizarPedido}>Finalizar pedido <FaWhatsapp/></Button>
+                                <Button onClick={handleFinalizarPedido} disabled={loading}>
+                                    {
+                                        loading ? "Procesando" : "Finalizar pedido"
+                                    }
+                                </Button>
                                 <NavLink to={'/carrito'}><LiaAngleLeftSolid />Volver al carrito</NavLink>
                             </CarritoResumenButtons>
                         </CarritoResumenWrapper>

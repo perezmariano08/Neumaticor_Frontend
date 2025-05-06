@@ -1,10 +1,11 @@
 import React from 'react'
 import { InputTextStyled } from './InputTextStyles'
 
-const InputText = ({ name, value, onChange, placeholder, required, error, disabled, type, keyfilter, validateOnly, onInput, min, max}) => {
+const InputText = ({ onBlur, name, value, onChange, placeholder, required, error, disabled, type, keyfilter, validateOnly, onInput, min, max}) => {
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' , width: '100%'}}>
             <InputTextStyled
+                onBlur={onBlur}
                 required={required}
                 name={name} 
                 value={value}

@@ -13,9 +13,6 @@ const CuentaPedidos = () => {
     const { data: pedidos, error, isLoading } = usePedidosUsuario(user?.id_usuario);
     const { data: pedidosDetalle, error:errorPedidosDetalle, isLoading: loadingPedidosDetalle } = usePedidoDetalleUsuario(user?.id_usuario);
 
-    console.log(pedidos);
-    console.log(pedidosDetalle);
-
     return (
         <CuentaContainer>
             <CuentaWrapper>
@@ -36,9 +33,14 @@ const CuentaPedidos = () => {
                                             <p>${formatPrice(p.total)}</p>
                                         </CuentaPedidoHeaderItem>
                                     </CuentaPedidoHeaderItems>
-                                    <CuentaPedidoHeaderEstado>
-                                        <p>{p.estado}</p>
-                                    </CuentaPedidoHeaderEstado>
+                                    {p.estado === "F" && <CuentaPedidoHeaderEstado className='green'>
+                                        <p>Finalizado</p>
+                                    </CuentaPedidoHeaderEstado>}
+                                    {p.estado === "P" && <CuentaPedidoHeaderEstado>
+                                        <p>Pendiente</p>
+                                    </CuentaPedidoHeaderEstado>}
+
+                                    
                                 </CuentaPedidoHeader>
                                 <CuentaPedidoMain>
                                     {

@@ -81,7 +81,75 @@ export const AsideMenu = styled.ul`
     display: flex;
     flex-direction: column;
     gap: 10px;
+    overflow-y: scroll;
     padding: 20px;
+
+    &.bottom {
+        overflow: hidden;
+    }
+
+    &::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: var(--black-800);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: var(--black-100);
+        border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+
+    a.p-accordion-header-link {
+        background-color: transparent;
+        color: var(--white-0);
+        border: none;
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border-radius: 10px;
+
+        &:hover {
+            background-color: var(--yellow);
+            color: var(--black-800);
+            .p-accordion-header-text {
+                color: var(--black-800);
+            }
+            svg {
+                color: var(--black-800);
+            }
+        }
+
+        .p-accordion-header-text {
+            color: var(--white-0);
+        }
+    }
+
+    .p-accordion .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link {
+        border-radius: 10px;
+    }
+
+    .tab {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        p {
+            font-weight: 300;
+        }
+        svg {
+            font-size: 14px;
+            color: var(--yellow);
+        }
+    }
+
+    .p-accordion-content {
+        border: none;
+    }
 `
 
 export const MenuItem = styled.li`
@@ -89,6 +157,33 @@ export const MenuItem = styled.li`
     flex-direction: column;
     gap: 10px;
     overflow: hidden;
+`
+
+export const AccordionMenuWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    padding: 5px 0;
+    background-color: var(--black-800);
+`
+
+export const AccordionMenu = styled(NavLink)`
+    display: flex;
+    color: var(--white-0);
+    overflow: hidden;
+    border: none;
+    background-color: var(--black-800);
+    font-weight: 300;
+    padding: 10px;
+    border-left: 1px solid var(--yellow);
+
+
+    &.active {
+        color: var(--yellow);
+    }
+
+    &:hover {
+        background-color: var(--black-600);
+    }
 `
 
 export const NavLinkItem = styled(motion(NavLink))`
@@ -106,7 +201,7 @@ export const NavLinkItem = styled(motion(NavLink))`
     }
     
     svg {
-        color: var(--white-0);
+        color: var(--yellow);
     }
 
 

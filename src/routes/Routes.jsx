@@ -22,6 +22,8 @@ import Pedidos from '../pages/Admin/Pedidos/Pedidos'
 import PedidosDetalle from '../pages/Admin/Pedidos/PedidosDetalle'
 import Cuenta from '../pages/Cuenta/Cuenta'
 import CuentaPedidos from '../pages/Cuenta/CuentaPedidos'
+import ListasPrecios from '../pages/Admin/ListasPrecios/ListasPrecios'
+import ListasPreciosDetalle from '../pages/Admin/ListasPrecios/ListasPreciosDetalle'
 
 const Routes = () => {
     return (
@@ -50,6 +52,8 @@ const Routes = () => {
                         <Route path='usuarios/registrar' element={<LayoutAdmin><UsuariosRegistrar /></LayoutAdmin>} />
                         <Route path='pedidos' element={<LayoutAdmin><Pedidos /></LayoutAdmin>} />
                         <Route path='pedidos/:id_pedido' element={<LayoutAdmin><PedidosDetalle /></LayoutAdmin>} />
+                        <Route path='listas-precios' element={<LayoutAdmin><ListasPrecios /></LayoutAdmin>} />
+                        <Route path='listas-precios/:id_lista_precio' element={<LayoutAdmin><ListasPreciosDetalle /></LayoutAdmin>} />
                     </Route>
                 </ReactDomRoutes>
             </RequireAuth>

@@ -69,4 +69,42 @@ export const DataTableEstado = styled.div`
         background-color: var(--green-10);
         color: var(--green);
     }
+
+    &.orange {
+        background-color: var(--orange-10);
+        border: 1px solid var(--orange);
+        color: var(--orange);
+    }
+`
+
+export const DataTableAccionesWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        transition: all ease-in-out .2s;
+        &.red {
+            border: 1px solid var(--red);
+            background-color: var(--red);
+            color: var(--white-0);
+        }
+
+        &.orange {
+            background-color: var(--orange-10);
+            border: 1px solid var(--orange);
+            color: var(--orange);
+
+            &:hover {
+                background-color: var(--orange);
+                color: var(--white-0);
+            }
+        }
+    }
 `

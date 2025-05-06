@@ -48,12 +48,10 @@ const cartSlice = createSlice({
         },
         // Eliminar un artículo específico del carrito
         removeItem: (state, action) => {
-            if(window.confirm('¿Desea eliminar este producto del carrito?')){
-                return {
-                    ...state,
-                    cartItems: state.cartItems.filter(item => item.id_producto !== action.payload),
-                    shippingCost: resetShippingCost(state.cartItems, SHIPPING_COST)
-                }
+            return {
+                ...state,
+                cartItems: state.cartItems.filter(item => item.id_producto !== action.payload),
+                shippingCost: resetShippingCost(state.cartItems, SHIPPING_COST)
             }
         },
         // Nueva acción para controlar el estado del modal

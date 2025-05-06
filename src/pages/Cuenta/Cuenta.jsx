@@ -25,6 +25,7 @@ const Cuenta = () => {
         nombre: user.nombre,
         apellido: user.apellido,
         email: user.email,
+        nombre_visible: user.nombre_visible
     }); 
 
 
@@ -64,6 +65,19 @@ const Cuenta = () => {
                                 disabled
                             />
                         </InputTextWrapper>
+                        {
+                            formState.nombre_visible && <InputTextWrapper label={'Nombre visible'}>
+                            <InputText 
+                                name="nombre_visible"
+                                value={formState.nombre_visible}
+                                onChange={handleFormChange}
+                                placeholder="Escriba el email"
+                                error={formErrors.nombre_visible}
+                                disabled
+                            />
+                        </InputTextWrapper>
+                        }
+                        
                     </Form>
                 </CuentaPerfilWrapper>
             </CuentaWrapper>

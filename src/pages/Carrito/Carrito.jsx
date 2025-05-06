@@ -13,6 +13,7 @@ import { useProductosConPrecio } from '../../hooks/api/useProductos'
 import { formatPrice } from '../../utils/formatPrice'
 import Skeleton from 'react-loading-skeleton'
 import { clearCart } from '../../redux/cart/cartSlice'
+import { confirmDialog } from 'primereact/confirmdialog'
 
 const Carrito = () => {
     const [value, setValue] = useState('');
@@ -20,7 +21,6 @@ const Carrito = () => {
     const { data: productosConPrecio, isLoading } = useProductosConPrecio();
     const navigate = useNavigate();
     const dispatch = useDispatch()
-
 
     const productosCarrito = useMemo(() => {
         return cartItems.map(item => {
@@ -34,10 +34,18 @@ const Carrito = () => {
         });
     }, [cartItems, productosConPrecio, isLoading]);
 
-    
     const precioTotal = useMemo(() => {
         return productosCarrito.reduce((total, item) => total + item.subtotal, 0);
     }, [productosCarrito]);
+    
+    // Funcion para confirmar vaciar carrito
+    const confirmar = () => {
+        confirmDialog({
+            message: `¿Estás seguro de que quieres vaciar el carrito?`,
+            header: 'Confirmación',
+            accept: () => dispatch(clearCart())
+        });
+    };
 
     return (
         <CarritoContainer>
@@ -47,7 +55,6 @@ const Carrito = () => {
                     <LiaAngleRightSolid />
                     <NavLink to={'/carrito'}>Carrito</NavLink>
                 </NavegacionPages>
-
                 {
                     cartItems.length > 0 ? 
                     <>
@@ -63,7 +70,7 @@ const Carrito = () => {
                             </CarritoItems>
                             <Button 
                                 disabled={!cartItems.length}
-                                onClick={() => dispatch(clearCart())}
+                                onClick={confirmar}
                             >
                                 Vaciar carrito
                             </Button>

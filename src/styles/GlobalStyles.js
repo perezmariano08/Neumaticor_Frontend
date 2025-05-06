@@ -41,6 +41,8 @@ export const GlobalStyles = createGlobalStyle`
 
         
 
+        --orange: #f97316;
+        --orange-10: #f973161A;
         --text: #1a1a1a;
         --yellow: #FED602;
         --yellow-10: rgba(255, 214, 2, 0.1); /* 10% de opacidad */

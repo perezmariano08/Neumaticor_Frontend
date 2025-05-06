@@ -9,7 +9,6 @@ const PedidosDetalle = () => {
     const id_pedido = parseInt(useParams().id_pedido, 10);
     const { data: pedido, error, isLoading } = usePedido(id_pedido);
     const navigate = useNavigate()
-    console.log(pedido);
 
     const renderers = {
         precio_unitario: (rowData) => (

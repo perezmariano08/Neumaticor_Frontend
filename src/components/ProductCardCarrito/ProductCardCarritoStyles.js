@@ -3,13 +3,18 @@ import styled from "styled-components";
 export const ProductCardCarritoWrapper = styled.article`
     display: flex;
     padding: 16px;
-    border-radius: ${(props) => (props.profile ? '0px' : '16px')};
+    border-radius: 16px;
     width: 100%;
     gap: 20px;
     background-color: var(--white-0);
-    border: ${(props) => (props.profile ? 'none' : '1px solid var(--white-100)')};
-    border-bottom: ${(props) => (props.profile ? '1px solid var(--white-100)' : 'none')};
+    border: 1px solid var(--white-100);
+    border-bottom: none;
     
+    &.profile {
+        border: none;
+        border-bottom: 1px solid var(--white-100);
+        border-radius: 0;
+    }
     @media (max-width: 768px) {
         flex-direction: column;
     }

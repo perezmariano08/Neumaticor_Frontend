@@ -39,8 +39,10 @@ export const fetchProductosConPrecio = async (idUsuario, idProducto) => {
     return res.json(); // Devolvemos el producto con su precio
 };
 
-export const fetchMarcas = async () => {
-    const res = await fetch(`${URL_API}productos/marcas`);
+export const fetchMarcas = async (user) => {
+    const res = await fetch(`${URL_API}productos/marcas`, {
+        user: user, // ⬅️ Esto es fundamental
+    });
     if (!res.ok) throw new Error("Error al cargar los datos de marcas");
     return res.json();
 };

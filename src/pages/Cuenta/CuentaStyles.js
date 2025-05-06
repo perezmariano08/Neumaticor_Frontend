@@ -104,6 +104,12 @@ export const CuentaPedidoHeaderEstado = styled.div`
     p {
         font-size: 14px;
     }
+
+    &.green {
+        border: 1px solid var(--green);
+        color: var(--white-0);
+        background-color: var(--green);
+    }
 `
 
 export const CuentaPedidoMain = styled.div`

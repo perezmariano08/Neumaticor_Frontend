@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { IconCart, NavLinkStyled, NavbarBusqueda, NavbarContainerStyled, NavbarIcons, NavbarList, NavbarLogo, NavbarTopContainerStyled, NavbarTopItem, NavbarTopItems, NavbarTopWrapper, NavbarWrapper, OpenModalMenu, OpenModalUser
+import { IconCart, NavLinkStyled, NavbarContainerStyled, NavbarIcons, NavbarList, NavbarLogo, NavbarTopContainerStyled, NavbarTopItem, NavbarTopItems, NavbarTopWrapper, NavbarWrapper, OpenModalMenu, OpenModalUser
 } from './NavbarStyles'
 
 // React Icons
@@ -12,27 +12,19 @@ import { RiUserLine } from "react-icons/ri";
 import ModalMenu from '../ModalMenu/ModalMenu';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-
 import { toggleHiddenMenu } from '../../redux/menu/menuSlice';
-import ModalUser from '../ModalUser/ModalUser';
 import { IMAGES_URL } from '../../utils/constants';
-import InputText from '../UI/InputText/InputText';
 import { useNavigate } from 'react-router-dom';
-
-
 
 const Navbar = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const [toggleModalUser, setToggleModalUser] = useState(false)
 
     const totalCartItems = useSelector((state) => 
         state.cart.cartItems).reduce((acc, item) => (acc += item.quantity), 0
     )
-    const [busqueda, setBusqueda] = useState('');
 
     const user = useSelector((state) => state.user.user);
-    console.log(user);
     
 
     return (
@@ -88,11 +80,8 @@ const Navbar = () => {
                         </OpenModalMenu>
                         {/* Mostrar el nombre del usuario si está autenticado, o el login */}
                         {user && (
-                            <OpenModalUser onClick={() => setToggleModalUser(!toggleModalUser)}>
+                            <OpenModalUser onClick={() => navigate('/cuenta')}>
                                 <RiUserLine />
-                                {
-                                    toggleModalUser && <ModalUser/>
-                                }
                             </OpenModalUser>
                         )}
                     </NavbarIcons> 

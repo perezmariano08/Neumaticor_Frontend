@@ -14,16 +14,18 @@ import Dropdown from '../../components/UI/Dropdown/Dropdown';
 import { useSearchParams } from 'react-router-dom';
 import { RiArrowUpDownLine } from "react-icons/ri";
 import InputText from '../../components/UI/InputText/InputText';
+import useIsMobile from '../../hooks/useIsMobile';
 
 
 const Productos = () => {
     // const { data: productos, error, isLoading } = useProductos();
     const user = useSelector((state) => state.user.user); // Obtener el estado del usuario desde Redux   
     const{ data: productos, error, isLoading }  = useProductosConPrecio();
+    const isMobile = useIsMobile();
+    const accordionIndex = isMobile ? null : 0; // null = cerrado
+    
     const{ data: marcas }  = useMarcas();
     const [searchParams, setSearchParams] = useSearchParams();
-
-    console.log(marcas);
     
     // Filtros Accordion
     const filtros = [
@@ -183,7 +185,7 @@ const Productos = () => {
                 <ProductosMain>
                     <ProductosFiltroWrapper>
                         {filtros?.map(({ tipo, label, campo }) => (
-                            <Accordion key={tipo} activeIndex={0}>
+                            <Accordion key={tipo} activeIndex={accordionIndex}>
                                 <AccordionTab header={label}>
                                     <AccordionContent>
                                         <ProductosFiltro

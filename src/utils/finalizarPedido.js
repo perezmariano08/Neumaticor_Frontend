@@ -1,7 +1,8 @@
 import axios from "axios";
 import { URL_API } from "./constants";
 
-export const finalizarPedido = async (formState, productosCarrito, precioTotal, totalConInteres, cuotas, user, tieneFate, tienePirelli) => {
+export const finalizarPedido = async (toast, formState, productosCarrito, precioTotal, totalConInteres, cuotas, user, tieneFate, tienePirelli) => {
+    
     const mensaje = generarMensajeWhatsapp(formState, productosCarrito, precioTotal, totalConInteres, cuotas, user, tieneFate, tienePirelli);
     console.log(user);
     console.log(formState);
@@ -12,15 +13,17 @@ export const finalizarPedido = async (formState, productosCarrito, precioTotal, 
             id_usuario: user.id_usuario,
             total: precioTotal,
             metodo_pago: formState.metodoPago,
-            productos: productosCarrito
+            productos: productosCarrito,
+            direccion: formState.direccion,
+            codigo_postal: formState.codigo_postal
         });
 
         const { success, message } = response.data;
 
         if (success) {
-            alert("pedido existoso")
+            toast.current.show({ severity: 'success', summary: 'Pedido exitoso', detail: `Tu pedido ha sido finalizado correctamente.`, life: 3000 });
         } else {
-            alert(`Error: ${message}`);
+            toast.current.show({ severity: 'error', summary: 'Error', detail: message, life: 3000 });
         }
 
     } catch (error) {

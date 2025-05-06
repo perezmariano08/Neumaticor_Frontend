@@ -6,9 +6,20 @@ import {formatPrice} from '../../utils/formatPrice'
 import { useDispatch } from 'react-redux';
 import { addToCart, removeFromCart, removeItem } from '../../redux/cart/cartSlice';
 import Skeleton from 'react-loading-skeleton';
+import { confirmDialog } from 'primereact/confirmdialog';
 
 const ProductCardCarrito = ({isLoading, profile, id_producto, descripcion, marca, vehiculo, precio, quantity, img}) => {
     const dispatch = useDispatch()
+
+    const confirmar = () => {
+        confirmDialog({
+            message: `¿Estás seguro de que quieres eliminar ${descripcion} del carrito?`,
+            header: 'Confirmación',
+            accept: () => dispatch(removeItem(id_producto))
+        });
+    };
+
+    // Skeleton
     if (isLoading) {
         return (
             <ProductCardCarritoWrapper profile={profile}>
@@ -43,7 +54,7 @@ const ProductCardCarrito = ({isLoading, profile, id_producto, descripcion, marca
     }
 
     return (
-        <ProductCardCarritoWrapper profile={profile}>
+        <ProductCardCarritoWrapper className={profile && 'profile'}>
             <ProductCardCarritoMain>
                 <img alt={img} src={img ? `${IMAGES_URL}/productos/${marca.toLowerCase().replace(/\s+/g, '-')}/${img.toLowerCase()}` : `${IMAGES_URL}/images/imagen-no-disponible.png`} className='producto'/>
                 <ProductCardCarritoDetalles>
@@ -67,7 +78,7 @@ const ProductCardCarrito = ({isLoading, profile, id_producto, descripcion, marca
                     <p>{quantity}</p>
                     <span  onClick={() => dispatch(addToCart({product:{quantity, id_producto}}))}>+</span>
                 </ProductCardCantidad>
-                <BsTrash3  onClick={() => dispatch(removeItem(id_producto))} />
+                <BsTrash3 onClick={confirmar} />
             </ProductCardButtons>
             }
         </ProductCardCarritoWrapper>

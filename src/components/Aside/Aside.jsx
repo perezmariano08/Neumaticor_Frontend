@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { AsideContainerStyled, AsideHeader, AsideMenu, AsideMenuWrapper, MenuItem, NavLinkAngleDown, NavLinkItem, SubMenu, SubMenuItem } from './AsideStyles';
+import { AccordionMenu, AccordionMenuWrapper, AsideContainerStyled, AsideHeader, AsideMenu, AsideMenuWrapper, MenuItem, NavLinkAngleDown, NavLinkItem, SubMenu, SubMenuItem } from './AsideStyles';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { HiOutlineTrophy } from "react-icons/hi2";
@@ -9,6 +9,8 @@ import { IoEyeOutline } from "react-icons/io5";
 import { PiCalculatorLight, PiUsersThree } from "react-icons/pi";
 import { TbClipboardList } from "react-icons/tb";
 import { CiShoppingBasket } from "react-icons/ci";
+import { Accordion, AccordionTab } from 'primereact/accordion';
+import { TbReportMoney } from "react-icons/tb";
 
 const Aside = ({className}) => {
     const location = useLocation();
@@ -43,6 +45,9 @@ const Aside = ({className}) => {
     const [isOpen, setIsOpen] = useState(true);
     const isActive = location.pathname.startsWith('/admin/legajos');
 
+    const isActiveProductos = location.pathname.startsWith('/admin/productos');
+
+
     return (
         <>
             <AsideContainerStyled 
@@ -57,13 +62,28 @@ const Aside = ({className}) => {
                             <MdOutlineDashboard />
                             <p>Dashboard</p>
                         </NavLinkItem> */}
-                        <NavLinkItem to={"/admin/productos"} end>
-                            <CiShoppingBasket />
-                            <p>Productos</p>
-                        </NavLinkItem>
-                        <NavLinkItem to={"/admin/productos/calculadora"}>
-                            <PiCalculatorLight />
-                            <p>Calculadora</p>
+                        <Accordion activeIndex={isActiveProductos ? 0 : null}>
+                            <AccordionTab 
+                                header={
+                                <div className='tab'>
+                                    <CiShoppingBasket />
+                                    <p>Productos</p>
+                                </div>
+                                }
+                            >   
+                                <AccordionMenuWrapper>
+                                    <AccordionMenu to={'/admin/productos'} end>
+                                        Listar productos
+                                    </AccordionMenu>
+                                    <AccordionMenu to={'/admin/productos/calculadora'}>
+                                        Calculadora
+                                    </AccordionMenu>
+                                </AccordionMenuWrapper>
+                            </AccordionTab>
+                        </Accordion>
+                        <NavLinkItem to={'/admin/listas-precios'}>
+                            <TbReportMoney />
+                            <p>Listas de precios</p>
                         </NavLinkItem>
                         <NavLinkItem to={'/admin/usuarios'}>
                             <PiUsersThree />
@@ -74,7 +94,7 @@ const Aside = ({className}) => {
                             <p>Pedidos</p>
                         </NavLinkItem>
                     </AsideMenu>
-                    <AsideMenu>
+                    <AsideMenu className='bottom'>
                         <NavLinkItem to='/'>
                             <IoEyeOutline />
                             <p>Ver web</p>

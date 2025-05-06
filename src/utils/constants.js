@@ -4,8 +4,8 @@ export const BASE_URL = 'https://neumaticor.com';
 export const IMAGES_URL = 'https://darkslategrey-dragonfly-873689.hostingersite.com/uploads';
 export const FONTS_URL = 'https://darkslategrey-dragonfly-873689.hostingersite.com/uploads/fonts';
 
-export const URL_API = 'https://apineumaticor.vercel.app/api/';
-// export const URL_API = 'http://localhost:3001/api/';
+// export const URL_API = 'https://apineumaticor.vercel.app/api/';
+export const URL_API = 'http://localhost:3001/api/';
 
 
 

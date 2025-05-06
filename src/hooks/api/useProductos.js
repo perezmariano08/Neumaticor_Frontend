@@ -37,9 +37,12 @@ export const useProductosConPrecio = (idProducto) => {
 };
 
 export const useMarcas = () => {
+    const token = useSelector((state) => state.user.token);
+
     return useQuery({
-        queryKey: ["marcas"],
-        queryFn: fetchMarcas,
+        queryKey: ["marcas", token],
+        queryFn: () => fetchMarcas(token), // ✅ AHORA SÍ se ejecuta correctamente
         staleTime: 1000 * 60 * 0.5, // Caché de 5 minutos
+        enabled: !!token, // ⚠️ Esto evita que se haga la query si no hay token
     });
 };

@@ -1,11 +1,11 @@
 export const INITIAL_LIMIT = 9;
 export const SHIPPING_COST = 1500;
 export const BASE_URL = 'https://neumaticor.com';
-export const IMAGES_URL = 'https://darkslategrey-dragonfly-873689.hostingersite.com/uploads';
-export const FONTS_URL = 'https://darkslategrey-dragonfly-873689.hostingersite.com/uploads/fonts';
+export const IMAGES_URL = 'https://neumaticor.com.ar/uploads';
+export const FONTS_URL = 'https://neumaticor.com.ar/uploads/fonts';
 
-// export const URL_API = 'https://apineumaticor.vercel.app/api/';
-export const URL_API = 'http://localhost:3001/api/';
+export const URL_API = 'https://apineumaticor.vercel.app/api/';
+// export const URL_API = 'http://localhost:3001/api/';
 
 
 

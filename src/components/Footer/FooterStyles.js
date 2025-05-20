@@ -22,6 +22,7 @@ export const FooterInfo = styled.div`
     justify-content: space-between;
     @media (max-width: 968px) {
         flex-direction: column;
+        gap: 30px;
     }
 `
 
@@ -51,6 +52,10 @@ export const FooterMenu = styled.ul`
     color: var(--white);
     gap: 20px;
     text-transform: uppercase;
+
+    li a {
+        color: var(--white-100);
+    }
 `
 
 export const FooterContact = styled.div`

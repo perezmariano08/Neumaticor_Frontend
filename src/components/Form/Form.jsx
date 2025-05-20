@@ -1,9 +1,12 @@
 import React from 'react'
 import { FormStyled } from './FormStyles'
 
-const Form = ({children}) => {
+const Form = ({children, bg, titulo, padding}) => {
     return (
-        <FormStyled>
+        <FormStyled
+            bg={bg}
+            padding={padding}
+        >
             {children}
         </FormStyled>
     )

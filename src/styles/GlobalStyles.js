@@ -3,6 +3,7 @@ import { FONTS_URL } from "../utils/constants"
 export const GlobalStyles = createGlobalStyle`
     :root {
         --red: #BC0000;
+        --red-10: #BC00001a;
         --blue: #000E1B;
         --green: #57D163;
         --green-10: #57D16310;
@@ -15,7 +16,7 @@ export const GlobalStyles = createGlobalStyle`
         --gray-600: #26282B;
         --gray-700: #1B1D1F;
 
-        /* GrayScale */
+        /* White */
         --white-0: #FDFDFD;
         --white-50: #F0F0F0;
         --white-100: #E4E4E4;
@@ -27,6 +28,8 @@ export const GlobalStyles = createGlobalStyle`
         --white-700: #979797;
         --white-800: #8A8A8A;
         --white-900: #7E7E7E;
+
+        /* Black */
         --black-0: #71716F;
         --black-50: #656563;
         --black-100: #575757;
@@ -39,7 +42,53 @@ export const GlobalStyles = createGlobalStyle`
         --black-800: #050505;
         --black-900: #000000;
 
-        
+        /* Green */
+        --green-50: #F3FAF7;
+        --green-100: #DEF7EC;
+        --green-200: #BCF0DA;
+        --green-300: #84E1BC;
+        --green-400: #31C48D;
+        --green-500: #0E9F6E;
+        --green-600: #057A55;
+        --green-700: #046C4E;
+        --green-800: #03543F;
+        --green-900: #014737;
+
+        /* Red */
+        --red-50: #FDF2F2;
+        --red-100: #FDE8E8;
+        --red-200: #FBD5D5;
+        --red-300: #F8B4B4;
+        --red-400: #F98080;
+        --red-500: #F05252;
+        --red-600: #E02424;
+        --red-700: #C81E1E;
+        --red-800: #9B1C1C;
+        --red-900: #771D1D;
+
+        /* Blue */
+        --blue-50: #EBF5FF;
+        --blue-100: #E1EFFE;
+        --blue-200: #C3DDFD;
+        --blue-300: #A4CAFE;
+        --blue-400: #76A9FA;
+        --blue-500: #3F83F8;
+        --blue-600: #1C64F2;
+        --blue-700: #1A56DB;
+        --blue-800: #1E429F;
+        --blue-900: #233876;
+
+        /* Orange */
+        --orange-50: #FFF8F1;
+        --orange-100: #FEECDC;
+        --orange-200: #FCD9BD;
+        --orange-300: #FDBA8C;
+        --orange-400: #FF8A4C;
+        --orange-500: #FF5A1F;
+        --orange-600: #D03801;
+        --orange-700: #B43403;
+        --orange-800: #8A2C0D;
+        --orange-900: #771D1D;
 
         --orange: #f97316;
         --orange-10: #f973161A;
@@ -370,4 +419,8 @@ export const GlobalStyles = createGlobalStyle`
         }
     }
     
+    input:-webkit-autofill {
+        box-shadow: 0 0 0px 1000px var(--yellow-10) inset !important; /* Cambia "white" por tu color */
+        transition: background-color 5000s ease-in-out 0s;
+    }
 `

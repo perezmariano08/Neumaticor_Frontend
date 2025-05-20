@@ -1,5 +1,4 @@
 import React from 'react'
-import { useSolicitudes, useUsuarios } from '../../../hooks/api/useUsuarios';
 import { Column } from 'primereact/column';
 import { IMAGES_URL } from '../../../utils/constants';
 import DataTable from '../../../components/UI/DataTable/DataTable';
@@ -7,6 +6,7 @@ import { DataTableEstado } from '../../../components/UI/DataTable/DataTableStyle
 import { NavLink, useNavigate } from 'react-router-dom';
 import Button from '../../../components/UI/Button/Button';
 import { formatDate } from '../../../utils/formatDate';
+import { useSolicitudes, useUsuarios } from '../../../api/usuarios/useUsuarios';
 
 const Usuarios = () => {
     const { data: usuarios, error, isLoading } = useUsuarios();
@@ -70,16 +70,6 @@ const Usuarios = () => {
             <DataTable
                 rows={50} 
                 rowsPerPageOptions={[5, 10, 25, 50]}
-                value={solicitudes} 
-                tableStyle={{ minWidth: '50rem', width: '100%' }}
-                loading={loadingSolicitudes}
-                columns={columnsSolicitudes}
-                renderers={renderersSolicitudes}
-                dataKey={'id_solicitud'}
-            />
-            <DataTable
-                rows={50} 
-                rowsPerPageOptions={[5, 10, 25, 50]}
                 value={usuarios} 
                 tableStyle={{ minWidth: '50rem', width: '100%' }}
                 loading={isLoading}
@@ -87,6 +77,17 @@ const Usuarios = () => {
                 renderers={renderers}
                 dataKey={'id_usuario'}
             />
+            <DataTable
+                rows={50} 
+                rowsPerPageOptions={[5, 10, 25, 50]}
+                value={solicitudes} 
+                tableStyle={{ minWidth: '50rem', width: '100%' }}
+                loading={loadingSolicitudes}
+                columns={columnsSolicitudes}
+                renderers={renderersSolicitudes}
+                dataKey={'id_solicitud'}
+            />
+            
         </>
     );
 };

@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { usePedidoDetalleUsuario, usePedidos, usePedidosUsuario } from '../../hooks/api/usePedidos';
 import { useSelector } from 'react-redux';
 import { CuentaContainer, CuentaPerfilWrapper, CuentaWrapper } from './CuentaStyles';
 import { formatPrice } from '../../utils/formatPrice';
@@ -9,15 +8,13 @@ import Form from '../../components/Form/Form';
 import InputTextWrapper from '../../components/UI/InputText/InputTextWrapper';
 import useForm from '../../hooks/useForm';
 import InputText from '../../components/UI/InputText/InputText';
+import { usePedidoDetalleUsuario, usePedidosUsuario } from '../../api/pedidos/usePedidos';
 
 const Cuenta = () => {
     
     const user = useSelector((state) => state.user.user); // Obtener el estado del usuario desde Redux
     const { data: pedidos, error, isLoading } = usePedidosUsuario(user?.id_usuario);
     const { data: pedidosDetalle, error:errorPedidosDetalle, isLoading: loadingPedidosDetalle } = usePedidoDetalleUsuario(user?.id_usuario);
-
-    console.log(user);
-    console.log(pedidosDetalle);
     const [formErrors, setFormErrors] = useState({});
     
     // Manejo del form

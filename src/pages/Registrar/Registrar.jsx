@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { NavLink, useNavigate } from "react-router-dom";
-import { useAuthLogin } from "../../hooks/api/useAuth";
+import { Form, NavLink, useNavigate } from "react-router-dom";
 import { loginSuccess } from "../../redux/user/userSlice";
 import { validateEmail } from "../../utils/validarEmail";
 import { LoginButtonRegistrar, LoginContainer, LoginForm, LoginFormWrapper, LoginImagenWrapper, LoginInputWrapper, LoginWrapper } from "../Login/LoginStyles";
@@ -9,9 +8,10 @@ import { IMAGES_URL, URL_API } from "../../utils/constants";
 import Button from "../../components/UI/Button/Button";
 import InputText from "../../components/UI/InputText/InputText";
 import useForm from "../../hooks/useForm";
-import axios from "axios";
 import { useToast } from "../../context/ToastContext";
 import { ProgressSpinner } from "primereact/progressspinner";
+import { RiArrowRightSLine, RiSendPlaneFill, RiSendPlaneLine } from "react-icons/ri";
+import api from "../../api/axios";
 
 const Registrar = () => {
     const toast = useToast(); // Usamos el hook para acceder al Toast
@@ -19,28 +19,24 @@ const Registrar = () => {
     const [formState, handleFormChange, resetForm, setFormState] = useForm({ 
         nombre: '',
         email: '',
-        telefono: ''
+        telefono: '',
+        errores: {}
     });  
 
     const [error, setError] = useState('');
     const [loading, setLoading] = useState()
-    const navigate = useNavigate();  // Inicializa el hook useNavigate
-    const dispatch = useDispatch(); // Usar useDispatch
-    const { mutateAsync: loginUser, isLoading, isError, error: authError } = useAuthLogin();
 
     // Función para manejar el envío del formulario
     const handleRegistrar = async () => {
         if (validarCampos()) {
             try {
                 setLoading(true);
-    
-                const response = await axios.post(`${URL_API}auth/registrar-solicitud`, {
+                const response = await api.post(`auth/registrar-solicitud`, {
                     email: formState.email,
                     telefono: formState.telefono,
                     nombre: formState.nombre
                 });
-    
-                console.log('Respuesta completa del backend:', response); // Verifica toda la estructura
+
                 const { success, message } = response.data;
     
                 if (success) {
@@ -73,11 +69,8 @@ const Registrar = () => {
                 setLoading(false); // Lo pasamos al finally para asegurarnos que se ejecute siempre
             }
         } else {
-            console.log('Formulario con errores');
         }
     };
-
-    const [formErrors, setFormErrors] = useState({});
 
     const validarCampos = () => {
         const errores = {};
@@ -88,18 +81,15 @@ const Registrar = () => {
         } else if (!validateEmail(formState.email)) {
             errores.email = 'Email inválido';
         }
-        setFormErrors(errores);
+        setFormState(prev => ({ ...prev, errores: errores }));
         return Object.keys(errores).length === 0;
     };
-
-    console.log(formState);
     
-
     return (
         <LoginContainer>
             <LoginWrapper>
-                <LoginImagenWrapper imageUrl={`${IMAGES_URL}/images/login_wrapper.png`}>
-                    <img src={`${IMAGES_URL}/images/logos/logotipo-blanco.png`} alt="" srcset="" />
+                <LoginImagenWrapper $imageUrl={`${IMAGES_URL}/images/login_wrapper.png`}>
+                    <img src={`${IMAGES_URL}/images/logos/logotipo-blanco.png`} alt="Logo Neumaticor" />
                 </LoginImagenWrapper>
                 <LoginFormWrapper>
                     <h2>¿Tenes gomeria o taller? Contactanos y accedé a un precio especial!</h2>
@@ -108,10 +98,11 @@ const Registrar = () => {
                             <label htmlFor="email">Correo electrónico</label>
                             <InputText 
                                 name="email"
+                                type={'email'}
                                 value={formState.email}
                                 onChange={handleFormChange}
                                 placeholder="Escriba el email"
-                                error={formErrors.email}
+                                error={formState.errores.email}
                                 keyfilter="email"
                             />
                         </LoginInputWrapper>
@@ -122,22 +113,23 @@ const Registrar = () => {
                                 value={formState.nombre}
                                 onChange={handleFormChange}
                                 placeholder="Escriba el nombre"
-                                error={formErrors.nombre}
+                                error={formState.errores.nombre}
                             />
                         </LoginInputWrapper>
                         <LoginInputWrapper>
                             <label htmlFor="telefono">Telefono</label>
                             <InputText 
                                 name="telefono"
+                                type={'number'}
+                                inputMode="numeric"
                                 value={formState.telefono}
                                 onChange={handleFormChange}
                                 placeholder="Escriba el telefono"
-                                error={formErrors.telefono}
+                                error={formState.errores.telefono}
                                 keyfilter={'int'}
                             />
                         </LoginInputWrapper>
                         {error && <MensajeError><p>{error}</p></MensajeError>}
-                        
                     </LoginForm>
                     <Button width='100%' onClick={handleRegistrar} disabled={loading}>
                         {loading ? (
@@ -153,6 +145,7 @@ const Registrar = () => {
                         ) : (
                             <>
                                 <span>Enviar</span>
+                                <RiSendPlaneLine />
                             </>
                         )}
                     </Button>

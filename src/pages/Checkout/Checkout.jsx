@@ -26,8 +26,8 @@ import { useMemo, useState } from "react";
 import Input from "../../components/UI/Input/Input";
 import useForm from "../../hooks/useForm";
 import { CuotasNx } from "../../utils/constants";
-import { useProductosConPrecio } from "../../hooks/api/useProductos";
 import Skeleton from "react-loading-skeleton";
+import { useProductosConPrecio } from "../../api/productos/useProductos";
 
 const Checkout = () => {
     const dispatch = useDispatch();

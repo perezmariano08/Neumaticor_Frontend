@@ -117,7 +117,7 @@ export const ListaProductos = styled.div`
     }
 
     @media (max-width: 500px) {
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     }
 `;
 

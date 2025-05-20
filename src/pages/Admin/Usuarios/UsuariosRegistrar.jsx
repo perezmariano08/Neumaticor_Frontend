@@ -5,15 +5,16 @@ import Password from '../../../components/UI/Password/Password';
 import Button from '../../../components/UI/Button/Button';
 import { validateEmail } from '../../../utils/validarEmail';
 import axios from 'axios';
-import { usePrecios } from '../../../hooks/api/usePrecios';
 import Dropdown from '../../../components/UI/Dropdown/Dropdown';
 import { useSelector } from 'react-redux';
-import { useRoles } from '../../../hooks/api/useUsuarios';
 import InputTextWrapper from '../../../components/UI/InputText/InputTextWrapper';
 import Form from '../../../components/Form/Form';
 import { URL_API } from '../../../utils/constants';
 import { confirmDialog } from 'primereact/confirmdialog';
 import { useToast } from '../../../context/ToastContext';
+import { usePrecios } from '../../../api/precios/usePrecios'
+import { useRoles } from '../../../api/usuarios/useUsuarios';
+import api from '../../../api/axios';
 
 const UsuariosRegistrar = () => {
     const toast = useToast(); // Usamos el hook para acceder al Toast
@@ -21,7 +22,6 @@ const UsuariosRegistrar = () => {
     const { data: listas_precios, error, isLoading: loadingListas } = usePrecios();
     const { data: roles, error: errorRoles, isLoading: loadingRoles } = useRoles();
     const token = useSelector((state) => state.user.token);
-    console.log(roles);
     
     const [formErrors, setFormErrors] = useState({});
     const [isLoading, setLoading] = useState();
@@ -78,7 +78,7 @@ const UsuariosRegistrar = () => {
             try {
                 setLoading(true);
     
-                const response = await axios.post(`${URL_API}auth/register`, {
+                const response = await api.post(`auth/register`, {
                     email: formState.email,
                     password: formState.password,
                     nombre: formState.nombre,

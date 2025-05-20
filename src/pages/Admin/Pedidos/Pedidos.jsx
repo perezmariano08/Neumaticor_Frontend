@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { usePedidos } from '../../../hooks/api/usePedidos';
 import DataTable from '../../../components/UI/DataTable/DataTable';
 import { formatDate } from '../../../utils/formatDate';
 import { DataTableAccionesWrapper, DataTableEstado } from '../../../components/UI/DataTable/DataTableStyles';
@@ -16,11 +15,15 @@ import axios from 'axios';
 import { useQueryClient } from '@tanstack/react-query';
 import { useToast } from '../../../context/ToastContext';
 import { BiEdit } from "react-icons/bi";
+import { useSelector } from 'react-redux';
+import { HiOutlineEllipsisHorizontal } from "react-icons/hi2";
+import { usePedidos } from '../../../api/pedidos/usePedidos';
 
 const Pedidos = () => {
     const toast = useToast(); // Usamos el hook para acceder al Toast
     const queryClient = useQueryClient();
     const { data: pedidos, error, isLoading } = usePedidos();
+    const token = useSelector((state) => state.user.token); // o localStorage.getItem("token")
     const navigate = useNavigate()
     const [visible, setVisible] = useState(false);
     const [formErrors, setFormErrors] = useState({});
@@ -45,7 +48,6 @@ const Pedidos = () => {
                     setVisible(true); 
                 }}><BiEdit/></span>
             </DataTableAccionesWrapper>
-            
         ),        
         total: (rowData) => (
             <span>{Number(rowData.total)?.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}</span>
@@ -56,9 +58,9 @@ const Pedidos = () => {
         estado: (rowData) => {
             switch (rowData.estado) {
                 case 'P':
-                    return <DataTableEstado>Pendiente</DataTableEstado>;
+                    return <DataTableEstado className='orange'>Pendiente</DataTableEstado>;
                 case 'C':
-                    return <DataTableEstado className='orange'>Confirmado</DataTableEstado>;
+                    return <DataTableEstado className='blue'>Confirmado</DataTableEstado>;
                 case 'F':
                     return <DataTableEstado className='green'>Finalizado</DataTableEstado>;
             }
@@ -76,7 +78,6 @@ const Pedidos = () => {
         { field: 'estado', header: 'Estado' },
         { field: 'codigo_postal', header: 'Codigo Postal' },
         { field: 'direccion', header: 'Direccion' },
-
     ];
 
     const handleActualizarPedido = async () => {
@@ -84,10 +85,18 @@ const Pedidos = () => {
         if (pedidoSeleccionado.estado === formState.estado) return
 
         try {
-            const response = await axios.put(`${URL_API}pedidos/actualizar-pedido`, {
-                estado: formState.estado,
-                id_pedido: pedidoSeleccionado.id_pedido
-            });
+            const response = await axios.put(
+                `${URL_API}pedidos/actualizar-pedido`,
+                {
+                    estado: formState.estado,
+                    id_pedido: pedidoSeleccionado.id_pedido,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
             setVisible(false);
             if (response.data.success) {
                 await queryClient.invalidateQueries(["pedidos"]);

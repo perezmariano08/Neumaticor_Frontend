@@ -1,6 +1,7 @@
 import React from 'react'
 import { FooterBrand, FooterContact, FooterContainerStyled, FooterCopyright, FooterDivider, FooterInfo, FooterMenu, FooterSocialIcons, FooterWrapper, ItemFooterContact } from './FooterStyles'
 import { FaFacebook, FaInstagram, FaWhatsapp } from 'react-icons/fa6'
+import { NavLink } from 'react-router-dom'
 
 const Footer = () => {
     return (
@@ -11,13 +12,13 @@ const Footer = () => {
                         <img src="/Logos/Logotipo-Positivo.png" />
                         <p>Brindamos soluciones a usuarios particulares y profesionales de neumáticos, generando vínculos estrechos, ágiles y honestos que promueven relaciones a largo plazo basados en la evolución continua de nuestros procesos.</p>
                         <FooterSocialIcons>
-                            <a target="_blank" href="https://www.instagram.com/cubat.ok/"><FaInstagram/></a>
-                            <a target="_blank" href="https://www.facebook.com/cubat.ok/"><FaFacebook/></a>
+                            <a target="_blank" href="https://www.instagram.com/neumaticor.ok/"><FaInstagram/></a>
+                            <a target="_blank" href="https://www.facebook.com/neumaticor.ok/"><FaFacebook/></a>
                         </FooterSocialIcons>
                     </FooterBrand>
                     <FooterMenu>
-                        <li>INICIO</li>
-                        <li>productos</li>
+                        <li><NavLink to={'/'}>inicio</NavLink></li>
+                        <li><NavLink to={'/productos?order=OrderByOffer'}>productos</NavLink></li>
                     </FooterMenu>
                     <FooterContact>
                         <ItemFooterContact>

@@ -2,6 +2,14 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
 
+export const NavbarContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    z-index: 99;
+`
+
 export const NavbarTopContainerStyled = styled.nav`
     display: flex;
     justify-content: center;
@@ -21,12 +29,53 @@ export const NavbarTopWrapper = styled.div`
     justify-content: space-between;
     width: 100%;
     height: 100%;
-    max-width: 1260px;
-    padding: 0 30px;
+    max-width: 1230px;
+    padding: 0 15px;
     gap: 5px;
 
     p {
         color: var(--white-50);
+    }
+`
+
+export const NavbarTopIcons = styled.div`
+    display: flex;
+    gap: 20px;
+    
+    a {
+        color: var(--white-0);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        position: relative;
+
+        span {
+            position: absolute;
+            display: flex;
+            transition: all ease-in-out .2s;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            top: -6px;
+            right: -12px;
+            background-color: var(--yellow);
+            color: var(--black-900);
+            font-weight: 400;
+            font-size: 10px;
+        }
+
+        svg {
+            font-size: 19px;
+        }
+
+        &:hover {
+            svg {
+                color: var(--yellow);
+                transition: all ease-in-out .2s;
+            }
+        }
     }
 `
 
@@ -75,7 +124,7 @@ export const NavbarContainerStyled = styled.header`
     background-color: var(--yellow);
 
     @media (max-width: 968px) {
-        height: 60px;
+        height: 48px;
     }
 `
 
@@ -101,17 +150,29 @@ export const NavbarWrapper = styled.div`
             font-size: 25px;
         }
     }
+
+    @media (max-width: 968px) {
+        justify-content: center;
+    }
 `
 
-export const NavbarBusqueda = styled.div`
+export const NavbarBusqueda = styled.form`
     display: flex;
     width: 100%;
-
+    gap: 5px;
     input {
         width: 100%;
     }
 
-    @media (max-width: 768px) {
+    button {
+        justify-content: center;
+        align-items: center;
+        svg {
+            font-size: 20px;
+        }
+    }
+
+    @media (max-width: 968px) {
         display: none;
     }
 `
@@ -123,6 +184,8 @@ export const NavbarLogo = styled(motion.a)`
     }
     @media (max-width: 968px) {
         min-width: auto;
+        height: 50%;
+
     }
 `
 
@@ -130,7 +193,6 @@ export const NavbarList = styled.ul`
     display: flex;
     justify-content: center; 
     gap: 20px;
-    margin-right: 20px;
     @media (max-width: 968px) {
         display: none;
     }
@@ -159,6 +221,9 @@ export const NavbarIcons = styled.div`
     svg {
         color: var(--black-900);
     }
+    @media (max-width: 968px) {
+        display: none;
+    }
 `
 
 export const OpenModalMenu = styled(motion.div)`
@@ -178,28 +243,6 @@ export const OpenModalUser = styled(motion.div)`
     cursor: pointer;
 `
 
-export const IconCart = styled(motion(NavLink))`
-    background: var(--black);
-    border-radius: 20px;
-    padding: 6px 12px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--white);
-    text-align: center;
-    font-weight: 200;
-    cursor: pointer;
-    span {
-        font-size: 12px;
-        min-width: 16px;
-    }
-
-    i, svg {
-        font-size: 16px;
-        color: var(--white);
-    }
-`
-
 export const IconAccount = styled(motion(NavLink))`
     font-size: 16px;
     display: flex;
@@ -209,4 +252,75 @@ export const IconAccount = styled(motion(NavLink))`
     text-align: center;
     font-weight: 200;
     cursor: pointer;
+`
+
+export const NavbarMobile = styled.div`
+    display: none;
+    position: relative;
+    @media (max-width: 968px) {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 52px;
+        width: 100%;
+        background-color: var(--black-900);
+        padding: 0 16px;
+        color: var(--white-0);
+
+        a {
+            color: var(--white-0);
+            display: flex;
+            align-items: center;
+            position: relative;
+            span {
+                position: absolute;
+                display: flex;
+                transition: all ease-in-out .2s;
+                justify-content: center;
+                align-items: center;
+                border-radius: 50%;
+                width: 18px;
+                height: 18px;
+                top: -6px;
+                right: -8px;
+                background-color: var(--yellow);
+                color: var(--black-900);
+                font-weight: 400;
+                font-size: 10px;
+            }
+        }
+
+        svg {
+            font-size: 24px;
+            cursor: pointer;
+        } 
+    }
+`
+
+export const NavbarMobileForm = styled.form`
+    display: none;
+    @media (max-width: 968px) { 
+        position: absolute;
+        background-color: var(--white-0);
+        width: 100%;
+        height: fit-content;
+        z-index: 99;
+        top: 100px;
+        left: 0;
+        display: flex; 
+
+        input {
+            border-radius: 0;
+            height: 100%;
+        }
+
+        button {
+            border-radius: 0;
+            background-color: var(--white-100);
+            border: 1px solid var(--white-100);
+            svg {
+                font-size: 18px;
+            }
+        }
+    }
 `

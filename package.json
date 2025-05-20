@@ -10,11 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-oauth/google": "^0.12.2",
     "@reduxjs/toolkit": "^2.0.1",
     "@tanstack/react-query": "^5.71.1",
     "axios": "^1.6.5",
     "formik": "^2.4.5",
     "framer-motion": "^10.16.16",
+    "jspdf": "^3.0.1",
+    "jspdf-autotable": "^5.0.2",
     "primereact": "^10.8.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

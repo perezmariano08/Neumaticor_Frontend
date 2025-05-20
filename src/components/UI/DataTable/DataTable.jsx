@@ -2,10 +2,23 @@ import React, { useState } from 'react'
 import { DataTableStyled } from './DataTableStyles'
 import { Column } from 'primereact/column'
 
-const DataTable = ({ columns, paginator, rows, rowsPerPageOptions, value, loading, renderers, dataKey, selectable = true, onRowClick }) => {
-    const [rowClick, setRowClick] = useState(true);
-    const [selectedProducts, setSelectedProducts] = useState(null);
-    
+const DataTable = ({
+    columns,
+    paginator,
+    rows,
+    rowsPerPageOptions,
+    value,
+    loading,
+    renderers,
+    dataKey,
+    selectable = false,
+    onRowClick,
+    selected,
+    onSelectionChange,
+    filters,
+    globalFilterFields,
+    filterDisplay
+}) => {
     return (
         <DataTableStyled
             paginator={paginator}
@@ -16,9 +29,12 @@ const DataTable = ({ columns, paginator, rows, rowsPerPageOptions, value, loadin
             loading={loading}
             emptyMessage="No se encontraron datos."
             selectionMode={selectable ? null : undefined}
-            selection={selectable ? selectedProducts : undefined}
-            onSelectionChange={selectable ? (e) => setSelectedProducts(e.value) : undefined}
+            selection={selectable ? selected : undefined}
+            onSelectionChange={selectable ? (e) => onSelectionChange?.(e.value) : undefined}
             onRowClick={onRowClick}
+            filters={filters}
+            globalFilterFields={globalFilterFields} 
+            filterDisplay={filterDisplay}
         >
             {selectable && (
                 <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} />
@@ -28,6 +44,8 @@ const DataTable = ({ columns, paginator, rows, rowsPerPageOptions, value, loadin
                     key={col.field}
                     field={col.field}
                     header={col.header}
+                    filter={col.filter}
+                    style={col.style}
                     {...(renderers[col.field] && { body: renderers[col.field] })}
                 />
             ))}

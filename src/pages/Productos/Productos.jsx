@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { AccordionContent, FiltroOrden, Filtros, ListaProductos, ListaProductosWrapper, ProductosFiltroWrapper, ProductosMain, ProductsContainerStyled, ProductsWrapper } from './ProductosStyles';
 import Button from '../../components/UI/Button/Button';
 import ProductosFiltro from '../../components/ProductosFiltro/ProductosFiltro';
-import { useMarcas, useProductosConPrecio } from '../../hooks/api/useProductos';
 import { useSelector } from 'react-redux';
 import SkeletonProductCard from '../../components/ProductCard/SkeletonProductCard';
 import ProductCard from '../../components/ProductCard/ProductCard';
@@ -15,6 +14,7 @@ import { useSearchParams } from 'react-router-dom';
 import { RiArrowUpDownLine } from "react-icons/ri";
 import InputText from '../../components/UI/InputText/InputText';
 import useIsMobile from '../../hooks/useIsMobile';
+import { useMarcas, useProductosConPrecio } from '../../api/productos/useProductos';
 
 
 const Productos = () => {
@@ -89,6 +89,7 @@ const Productos = () => {
 
     const order = searchParams.get('order') || 'asc';
     const orderOptions = [
+        { name: 'Productos en oferta', code: 'OrderByOffer' },
         { name: 'Nombre: A-Z', code: 'OrderByNameASC' },
         { name: 'Nombre: Z-A', code: 'OrderByNameDESC' },
         { name: 'Precio: menor a mayor', code: 'OrderByPriceASC' },
@@ -96,6 +97,8 @@ const Productos = () => {
     ];    
     const orderedProducts = [...filteredProducts].sort((a, b) => {
         switch (order) {
+            case 'OrderByOffer':
+                return (b.oferta === 'S') - (a.oferta === 'S');
             case 'OrderByNameASC':
                 return a.descripcion.localeCompare(b.descripcion);
             case 'OrderByNameDESC':
@@ -108,7 +111,7 @@ const Productos = () => {
                 return 0;
         }
     });
-    
+
 
     if (isLoading) {
         return (

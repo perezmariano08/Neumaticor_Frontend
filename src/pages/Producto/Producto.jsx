@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { ProductContainerStyled, ProductImageWrapper, ProductInfoWrapper, ProductoAgregarCantidad, ProductoAgregarCarritoWrapper, ProductWrapper } from './ProductoStyles';
-import { useProducto } from '../../hooks/api/useProductos';
 import { IMAGES_URL } from '../../utils/constants';
 import { formatPrice } from '../../utils/formatPrice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,6 +10,7 @@ import { addToCart } from '../../redux/cart/cartSlice';
 import { useToast } from '../../context/ToastContext';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { HiOutlineShoppingCart } from 'react-icons/hi2';
+import { useProducto } from '../../api/productos/useProductos';
 
 const Producto = () => {
    const id_producto = parseInt(useParams().id_producto, 10);   

@@ -1,15 +1,12 @@
-import axios from "axios";
-import { URL_API } from "./constants";
+
+import api from "../api/axios";
 
 export const finalizarPedido = async (toast, formState, productosCarrito, precioTotal, totalConInteres, cuotas, user, tieneFate, tienePirelli) => {
     
     const mensaje = generarMensajeWhatsapp(formState, productosCarrito, precioTotal, totalConInteres, cuotas, user, tieneFate, tienePirelli);
-    console.log(user);
-    console.log(formState);
-    console.log(productosCarrito);
-
+    
     try {
-        const response = await axios.post(`${URL_API}pedidos/finalizar-pedido`, {
+        const response = await api.post(`pedidos/finalizar-pedido`, {
             id_usuario: user.id_usuario,
             total: precioTotal,
             metodo_pago: formState.metodoPago,

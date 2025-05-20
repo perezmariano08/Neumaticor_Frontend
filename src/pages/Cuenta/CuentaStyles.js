@@ -7,6 +7,10 @@ export const CuentaWrapper = styled(WrapperStyled)`
     gap: 20px;
     padding-top: 40px;
     padding-bottom: 40px;
+
+    @media (max-width: 968px) {
+        flex-direction: column;
+    }
 `
 
 export const CuentaMenuStyled = styled.div`
@@ -71,11 +75,20 @@ export const CuentaPedidoHeader = styled.div`
     align-items: center;
     padding: 16px;
     justify-content: space-between;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        gap: 20px;
+    }
 `
 
 export const CuentaPedidoHeaderItems = styled.div`
     display: flex;
     gap: 40px;
+    @media (max-width: 768px) {
+        justify-content: space-between;
+        width: 100%;
+    }
 `
 
 export const CuentaPedidoHeaderItem = styled.div`
@@ -95,7 +108,6 @@ export const CuentaPedidoHeaderEstado = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid var(--white-400);
     background-color: var(--white-200);
     border-radius: 10px;
     height: fit-content;
@@ -106,9 +118,23 @@ export const CuentaPedidoHeaderEstado = styled.div`
     }
 
     &.green {
-        border: 1px solid var(--green);
-        color: var(--white-0);
-        background-color: var(--green);
+        color: var(--green-700);
+        background-color: var(--green-100);
+    }
+
+    &.orange {
+        color: var(--orange-700);
+        background-color: var(--orange-100);
+    }
+
+    &.blue {
+        color: var(--blue-700);
+        background-color: var(--blue-100);
+    }
+
+    @media (max-width: 768px) {
+        justify-content: start;
+        width: fit-content;
     }
 `
 

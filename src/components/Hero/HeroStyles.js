@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const HeroContainerStyled = styled.section`
     position: relative;
-    background-image: url(/imgs/hero_img2.png);
+    background-image: url(/hero_img2.png);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

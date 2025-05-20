@@ -8,7 +8,7 @@ import { addToCart, removeFromCart, removeItem } from '../../redux/cart/cartSlic
 import Skeleton from 'react-loading-skeleton';
 import { confirmDialog } from 'primereact/confirmdialog';
 
-const ProductCardCarrito = ({isLoading, profile, id_producto, descripcion, marca, vehiculo, precio, quantity, img}) => {
+const ProductCardCarrito = ({stock, isLoading, profile, id_producto, oferta, precio_oferta, descripcion, marca, vehiculo, precio, quantity, img}) => {
     const dispatch = useDispatch()
 
     const confirmar = () => {
@@ -54,30 +54,41 @@ const ProductCardCarrito = ({isLoading, profile, id_producto, descripcion, marca
     }
 
     return (
-        <ProductCardCarritoWrapper className={profile && 'profile'}>
+        <ProductCardCarritoWrapper className={`${profile ? 'profile' : ''} ${stock === "N" ? 'off' : ''}`.trim()}>
             <ProductCardCarritoMain>
                 <img alt={img} src={img ? `${IMAGES_URL}/productos/${marca.toLowerCase().replace(/\s+/g, '-')}/${img.toLowerCase()}` : `${IMAGES_URL}/images/imagen-no-disponible.png`} className='producto'/>
                 <ProductCardCarritoDetalles>
                     <ProductCardCarritoDescripcion>
                         <span>{marca} / {vehiculo}</span>
                         <h3>{descripcion}</h3>
+                        {stock === "N" && <strong>SIN STOCK</strong>}
                     </ProductCardCarritoDescripcion>
                     <ProductCardCarritoPrecio>
-                        {profile && `${quantity}x `}
-                        $ {formatPrice(precio)}
+                        {
+                            oferta === "S" ? (
+                                <>
+                                    <p>{profile && `${quantity}x `}$ {formatPrice(precio_oferta)}</p>
+                                    <p className='price-off'>$ {formatPrice(precio)}</p>
+                                </>
+                            ) : (
+                                <p>{profile && `${quantity}x `}$ {formatPrice(precio)}</p>
+                            )
+                        }
                     </ProductCardCarritoPrecio>
                 </ProductCardCarritoDetalles>
             </ProductCardCarritoMain>
             {
                 !profile && <ProductCardButtons>
-                <ProductCardCantidad>
-                    <span 
-                        onClick={() => quantity > 1 && dispatch(removeFromCart(id_producto))} 
-                        style={{ opacity: quantity > 1 ? 1 : 0.3, cursor: quantity > 1 ? 'pointer' : 'not-allowed' }}
-                    >-</span>
-                    <p>{quantity}</p>
-                    <span  onClick={() => dispatch(addToCart({product:{quantity, id_producto}}))}>+</span>
-                </ProductCardCantidad>
+                    {
+                        stock === "S" && <ProductCardCantidad>
+                            <span 
+                                onClick={() => quantity > 1 && dispatch(removeFromCart(id_producto))} 
+                                style={{ opacity: quantity > 1 ? 1 : 0.3, cursor: quantity > 1 ? 'pointer' : 'not-allowed' }}
+                            >-</span>
+                            <p>{quantity}</p>
+                            <span  onClick={() => dispatch(addToCart({product:{quantity, id_producto}}))}>+</span>
+                        </ProductCardCantidad>
+                    }
                 <BsTrash3 onClick={confirmar} />
             </ProductCardButtons>
             }

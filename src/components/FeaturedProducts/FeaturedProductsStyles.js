@@ -1,9 +1,10 @@
 import styled from "styled-components";
+import { ContainerStyled, WrapperStyled } from "../mockups/MockupsStyles";
 
-export const FeaturedProductsContainer = styled.section`
+export const FeaturedProductsContainer = styled(ContainerStyled)`
 `
 
-export const FeaturedProductsWrapper = styled.div`
+export const FeaturedProductsWrapper = styled(WrapperStyled)`
     flex-direction: column;
     gap: 50px;
     justify-content: center;

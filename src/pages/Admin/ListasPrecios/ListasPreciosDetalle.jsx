@@ -1,6 +1,6 @@
 import React from 'react'
 import { useParams } from 'react-router-dom';
-import { useProductosConPrecio } from '../../../hooks/api/useProductos';
+import { useProductosConPrecio } from '../../../api/productos/useProductos';
 
 const ListasPreciosDetalle = () => {
     const id_lista_precio = parseInt(useParams().id_lista_precio, 10);

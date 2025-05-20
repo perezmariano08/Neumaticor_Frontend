@@ -8,7 +8,8 @@ const Button = ({
         disabled,
         onClick,
         type,
-        width = "fit-content"        
+        width = "fit-content" ,
+        style      
     }) => {
     return (
         <ButtonWrapper 
@@ -19,6 +20,7 @@ const Button = ({
             type={type}
             width={width}
             color={color}
+            style={style}
         >{children}</ButtonWrapper>
     )
 }

@@ -7,7 +7,7 @@ import ConfirmDialog from "./components/UI/ConfirmDialog/ConfirmDialog";
 const queryClient = new QueryClient(); // Crear una nueva instancia de QueryClient
 
 function App() {
-   
+
    const dispatch = useDispatch()
    const hiddenCart = useSelector((state) => state.cart.hidden)
    const hiddenMenu = useSelector((state) => state.menu.hidden)

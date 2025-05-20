@@ -5,15 +5,15 @@ import { NavbarList } from "../Navbar/NavbarStyles";
 export const ModalMenuContainerStyled = styled(motion.div)`
     position: fixed;
     top: 0;
-    right: 0;
+    left: 0;
     height: 100vh;
     padding: 30px;
     flex-direction: column;
     gap: 30px;
     z-index: 99;
     display: flex;
-    color: var(--white);
-    background-color: var(--black);
+    color: var(--white-0);
+    background-color: var(--black-900);
     width: 80%;
 
     img {
@@ -25,6 +25,12 @@ export const ModalMenuHeader = styled.div`
     display: flex;
     justify-content: space-between;
     font-size: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--black-300);
+
+    svg {
+        cursor: pointer;
+    }
 `
 
 

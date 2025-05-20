@@ -10,7 +10,7 @@ import { PiCalculatorLight, PiUsersThree } from "react-icons/pi";
 import { TbClipboardList } from "react-icons/tb";
 import { CiShoppingBasket } from "react-icons/ci";
 import { Accordion, AccordionTab } from 'primereact/accordion';
-import { TbReportMoney } from "react-icons/tb";
+import { TbReportMoney, TbMoneybag } from "react-icons/tb";
 
 const Aside = ({className}) => {
     const location = useLocation();
@@ -92,6 +92,10 @@ const Aside = ({className}) => {
                         <NavLinkItem to={'/admin/pedidos'}>
                             <TbClipboardList />
                             <p>Pedidos</p>
+                        </NavLinkItem>
+                        <NavLinkItem to={'/admin/pagos'}>
+                            <TbMoneybag />
+                            <p>Pagos</p>
                         </NavLinkItem>
                     </AsideMenu>
                     <AsideMenu className='bottom'>

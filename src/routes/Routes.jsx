@@ -24,6 +24,12 @@ import Cuenta from '../pages/Cuenta/Cuenta'
 import CuentaPedidos from '../pages/Cuenta/CuentaPedidos'
 import ListasPrecios from '../pages/Admin/ListasPrecios/ListasPrecios'
 import ListasPreciosDetalle from '../pages/Admin/ListasPrecios/ListasPreciosDetalle'
+import ProductosCrear from '../pages/Admin/Productos/ProductosCrear'
+import Search from '../pages/Search/Search'
+import ProductosEditar from '../pages/Admin/Productos/ProductosEditar'
+import UsuariosDetalle from '../pages/Admin/Usuarios/UsuariosDetalle'
+import PagosRegistrar from '../pages/Admin/Pagos/PagosRegistrar'
+import Pagos from '../pages/Admin/Pagos/Pagos'
 
 const Routes = () => {
     return (
@@ -31,6 +37,7 @@ const Routes = () => {
             <RequireAuth> {/* << Aquí envolvemos */}
                 <ReactDomRoutes>
                     <Route path='/' element={<Layout><Home/></Layout>} />
+                    <Route path='/buscar/:termino' element={<Layout><Search/></Layout>} />
                     <Route path='/productos' element={<Layout><Productos/></Layout>} />
                     <Route path='/checkout' element={<Layout><Checkout/></Layout>} />
                     <Route path='/carrito' element={<Layout><Carrito/></Layout>} />
@@ -46,14 +53,19 @@ const Routes = () => {
                     {/* Admin protegidas */}
                     <Route path='/admin' element={<RouteAdmin />}>
                         <Route path='dashboard' element={<LayoutAdmin><Dashboard /></LayoutAdmin>} />
-                        <Route path='productos' element={<LayoutAdmin><AdminProductos /></LayoutAdmin>} />
-                        <Route path='productos/calculadora' element={<LayoutAdmin><Calculadora /></LayoutAdmin>} />
+                        <Route path='productos' element={<LayoutAdmin title='Productos'><AdminProductos /></LayoutAdmin>} />
+                        <Route path='productos/calculadora' element={<LayoutAdmin title='Calculadora'><Calculadora /></LayoutAdmin>} />
+                        <Route path='productos/crear' element={<LayoutAdmin title='Crear producto'><ProductosCrear /></LayoutAdmin>} />
+                        <Route path='productos/editar/:id_producto' element={<LayoutAdmin title='Editar producto'><ProductosEditar /></LayoutAdmin>} />
                         <Route path='usuarios' element={<LayoutAdmin><Usuarios /></LayoutAdmin>} />
+                        <Route path='usuarios/:id_usuario' element={<LayoutAdmin><UsuariosDetalle /></LayoutAdmin>} />
                         <Route path='usuarios/registrar' element={<LayoutAdmin><UsuariosRegistrar /></LayoutAdmin>} />
                         <Route path='pedidos' element={<LayoutAdmin><Pedidos /></LayoutAdmin>} />
                         <Route path='pedidos/:id_pedido' element={<LayoutAdmin><PedidosDetalle /></LayoutAdmin>} />
                         <Route path='listas-precios' element={<LayoutAdmin><ListasPrecios /></LayoutAdmin>} />
                         <Route path='listas-precios/:id_lista_precio' element={<LayoutAdmin><ListasPreciosDetalle /></LayoutAdmin>} />
+                        <Route path='pagos' element={<LayoutAdmin><Pagos /></LayoutAdmin>} />
+                        <Route path='pagos/registrar' element={<LayoutAdmin><PagosRegistrar /></LayoutAdmin>} />
                     </Route>
                 </ReactDomRoutes>
             </RequireAuth>

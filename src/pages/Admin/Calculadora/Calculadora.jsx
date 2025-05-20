@@ -5,13 +5,13 @@ import InputText from '../../../components/UI/InputText/InputText';
 import Button from '../../../components/UI/Button/Button';
 import Form from '../../../components/Form/Form';
 import Dropdown from '../../../components/UI/Dropdown/Dropdown';
-import { usePrecios } from '../../../hooks/api/usePrecios';
 import { useToast } from '../../../context/ToastContext';
 import axios from 'axios';
 import { URL_API } from '../../../utils/constants';
 import { useSelector } from 'react-redux';
-import { useMarcas, useProductos } from '../../../hooks/api/useProductos';
 import { confirmDialog } from 'primereact/confirmdialog';
+import { useMarcas, useProductos } from '../../../api/productos/useProductos';
+import { usePrecios } from '../../../api/precios/usePrecios';
 
 
 const Calculadora = () => {

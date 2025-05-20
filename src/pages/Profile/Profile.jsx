@@ -12,7 +12,6 @@ import ProductCardCarrito from '../../components/ProductCardCarrito/ProductCardC
 import useForm from '../../hooks/useForm'
 import { CuotasNx, CuotasTarjeta, IMAGES_URL } from '../../utils/constants'
 import { useDispatch, useSelector } from 'react-redux'
-import { useProductosConPrecio } from '../../hooks/api/useProductos'
 import { FaWhatsapp } from 'react-icons/fa6'
 import { finalizarPedido } from '../../utils/finalizarPedido'
 import Skeleton from 'react-loading-skeleton'
@@ -20,6 +19,7 @@ import { validateEmail } from '../../utils/validarEmail'
 import { clearCart } from '../../redux/cart/cartSlice'
 import { useToast } from '../../context/ToastContext'
 import { useQueryClient } from '@tanstack/react-query'
+import { useProductosConPrecio } from '../../api/productos/useProductos'
 
 const Profile = () => {
     const toast = useToast(); // Usamos el hook para acceder al Toast
@@ -106,10 +106,12 @@ const Profile = () => {
         return {
             ...producto,
             quantity: item.quantity,
-            subtotal: (producto?.precio || 0) * item.quantity
+            subtotal: (producto?.oferta === 'S' ? producto?.precio_oferta : producto?.precio || 0) * item.quantity
         };
         });
     }, [cartItems, productosConPrecio, isLoading]);
+    
+    const exit = productosCarrito?.some((p) => p.stock === "N");
 
     
     const precioTotal = useMemo(() => {
@@ -439,7 +441,7 @@ const Profile = () => {
                             }
                             
                             <CarritoResumenButtons>
-                                <Button onClick={handleFinalizarPedido} disabled={loading}>
+                                <Button onClick={handleFinalizarPedido} disabled={loading || exit}>
                                     {
                                         loading ? "Procesando" : "Finalizar pedido"
                                     }

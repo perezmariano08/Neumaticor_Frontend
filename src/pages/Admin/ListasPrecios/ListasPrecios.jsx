@@ -1,7 +1,7 @@
 import React from 'react'
-import { usePrecios } from '../../../hooks/api/usePrecios';
 import DataTable from '../../../components/UI/DataTable/DataTable';
 import { useNavigate } from 'react-router-dom';
+import { usePrecios } from '../../../api/precios/usePrecios';
 
 const ListasPrecios = () => {
     const { data: listas_precios, error, isLoading: loadingListas } = usePrecios();

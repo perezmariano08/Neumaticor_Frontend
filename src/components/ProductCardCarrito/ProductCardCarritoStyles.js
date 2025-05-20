@@ -15,6 +15,11 @@ export const ProductCardCarritoWrapper = styled.article`
         border-bottom: 1px solid var(--white-100);
         border-radius: 0;
     }
+
+    &.off {
+        border: 1px solid var(--red);
+        background-color: var(--red-10);
+    }
     @media (max-width: 768px) {
         flex-direction: column;
     }
@@ -57,9 +62,22 @@ export const ProductCardCarritoDescripcion = styled.div`
     }
 `
 
-export const ProductCardCarritoPrecio = styled.p`
-    font-weight: 400;
-    font-size: 18px;
+export const ProductCardCarritoPrecio = styled.div`
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    
+    p {
+        font-size: 18px;
+        font-weight: 400;
+    }
+
+    p.price-off {
+        font-size: 14px;
+        font-weight: 200;
+        color: var(--black-900);
+        text-decoration: line-through;
+    }
 `
 
 export const ProductCardButtons = styled.div`

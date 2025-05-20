@@ -1,20 +1,22 @@
 import React, { useState } from 'react'
-import { IconCart, NavLinkStyled, NavbarContainerStyled, NavbarIcons, NavbarList, NavbarLogo, NavbarTopContainerStyled, NavbarTopItem, NavbarTopItems, NavbarTopWrapper, NavbarWrapper, OpenModalMenu, OpenModalUser
+import { NavLinkStyled, NavbarBusqueda, NavbarContainer, NavbarContainerStyled, NavbarIcons, NavbarList, NavbarLogo, NavbarMobile, NavbarMobileForm, NavbarTopContainerStyled, NavbarTopIcons, NavbarTopItem, NavbarTopItems, NavbarTopWrapper, NavbarWrapper, OpenModalMenu, OpenModalUser
 } from './NavbarStyles'
 
 // React Icons
-import { FaInstagram, FaUser} from "react-icons/fa6";
+import { FaInstagram } from "react-icons/fa6";
 import { BsEnvelopeAt } from "react-icons/bs";
-import { PiShoppingCartLight } from "react-icons/pi";
-import { CgMenuGridO } from "react-icons/cg";
-import { RiUserLine } from "react-icons/ri";
+import { CgMenuGridO, CgSearch  } from "react-icons/cg";
+import { RiInstagramLine, RiMailLine, RiMenu2Line, RiSearchLine, RiShoppingCartLine, RiUserLine } from "react-icons/ri";
 // Modales
 import ModalMenu from '../ModalMenu/ModalMenu';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleHiddenMenu } from '../../redux/menu/menuSlice';
 import { IMAGES_URL } from '../../utils/constants';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import InputText from '../../components/UI/InputText/InputText'
+import Button from '../../components/UI/Button/Button'
+import { AnimatePresence, motion } from 'framer-motion';
 
 const Navbar = () => {
     const dispatch = useDispatch()
@@ -25,25 +27,42 @@ const Navbar = () => {
     )
 
     const user = useSelector((state) => state.user.user);
-    
+    const [busqueda, setBusqueda] = useState('') 
+    const [mostrarBusquedaMobile, setMostrarBusquedaMobile] = useState(false);
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (!busqueda) return;
+        navigate(`/buscar/${encodeURIComponent(busqueda)}`);
+        setBusqueda(''); // cerrar luego de buscar
+        setMostrarBusquedaMobile(false); // cerrar luego de buscar
+    }
 
     return (
-        <>
+        <NavbarContainer>
             <NavbarTopContainerStyled>
                 <NavbarTopWrapper>
                     <NavbarTopItems>
-                        <NavbarTopItem target='_blank' to={'mailto:contacto@cubatoficial.online'}>
-                            <BsEnvelopeAt />
-                            <p>contacto@neumaticor.com</p>
+                        <NavbarTopItem target='_blank' to={'mailto:contacto@neumaticor.com.ar'}>
+                            <RiMailLine />
+                            <p>contacto@neumaticor.com.ar</p>
                         </NavbarTopItem>
                         <NavbarTopItem target='_blank' to={'https://www.instagram.com/neumaticor.ok/'}>
-                            <FaInstagram />
+                            <RiInstagramLine />
                             <p className='number'>neumaticor.ok</p>
                         </NavbarTopItem>
                     </NavbarTopItems>
-                    {
-                        user && <p>{`¡Bienvenido ${user.nombre}!`}</p>
-                    }
+                    <NavbarTopIcons>
+                        <NavLink to={'/cuenta'}>
+                            {user && <p>{`¡Bienvenido ${user.nombre}!`}</p>}
+                            <RiUserLine />
+                        </NavLink>
+                        <NavLink to={'/carrito'}>
+                            <RiShoppingCartLine />
+                            {
+                                totalCartItems > 0 && <span>{totalCartItems}</span>
+                            }
+                        </NavLink>
+                    </NavbarTopIcons>
                 </NavbarTopWrapper>
             </NavbarTopContainerStyled>
             <NavbarContainerStyled>
@@ -51,19 +70,19 @@ const Navbar = () => {
                     <NavbarLogo whileTap={{scale: .95}} href='/'>
                         <img src={`${IMAGES_URL}/images/logos/logotipo-negro.png`} alt="Logo Neumaticor" title='Neumaticor' />
                     </NavbarLogo>
-                    {/* <NavbarBusqueda>
+                    <NavbarBusqueda onSubmit={handleSubmit}>
                         <InputText 
                             name="busqueda"
                             value={busqueda}
                             onChange={(e) => setBusqueda(e.target.value)}
-                            placeholder="¿Qué estas buscando?"
+                            placeholder="Buscar producto..."
                         />
+                        <Button type="submit" background='white-0'><CgSearch /></Button>
                     </NavbarBusqueda>
-                     */}
                     <NavbarIcons>
                         <NavbarList>
                             <li><NavLinkStyled to={'/'}>Inicio</NavLinkStyled></li>
-                            <li><NavLinkStyled to={'/productos'}>Productos</NavLinkStyled></li>
+                            <li><NavLinkStyled to={'/productos?order=OrderByOffer'}>Productos</NavLinkStyled></li>
                             {!user && (
                                 <li><NavLinkStyled to="/login">Acceder</NavLinkStyled></li>
                             )}
@@ -71,24 +90,43 @@ const Navbar = () => {
                                 <li><NavLinkStyled to="/admin/usuarios">Admin</NavLinkStyled></li>
                             )}
                         </NavbarList>
-                        <IconCart whileTap={{scale: .85}} to={`/carrito`}>
-                            <PiShoppingCartLight />
-                            <span>{totalCartItems}</span>
-                        </IconCart>
-                        <OpenModalMenu whileTap={{scale: .8}} className='menu-icon' onClick={() => dispatch(toggleHiddenMenu())}>
-                            <CgMenuGridO />
-                        </OpenModalMenu>
                         {/* Mostrar el nombre del usuario si está autenticado, o el login */}
-                        {user && (
-                            <OpenModalUser onClick={() => navigate('/cuenta')}>
-                                <RiUserLine />
-                            </OpenModalUser>
-                        )}
                     </NavbarIcons> 
                 </NavbarWrapper>
             </NavbarContainerStyled>
+            <NavbarMobile>
+                <RiMenu2Line onClick={() => dispatch(toggleHiddenMenu())} />
+                <RiSearchLine onClick={() => setMostrarBusquedaMobile(prev => !prev)} />
+                <NavLink to={'/cuenta'}><RiUserLine /></NavLink>
+                <NavLink to={'/carrito'}>
+                    <RiShoppingCartLine />
+                    {
+                        totalCartItems > 0 && <span>{totalCartItems}</span>
+                    }
+                </NavLink>
+            </NavbarMobile>
+            <AnimatePresence>
+                {mostrarBusquedaMobile && (
+                    <NavbarMobileForm
+                        as={motion.form}
+                        onSubmit={handleSubmit}
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2, ease: 'easeInOut' }}
+                    >
+                        <InputText 
+                            name="busquedaMobile"
+                            value={busqueda}
+                            onChange={(e) => setBusqueda(e.target.value)}
+                            placeholder="Buscar producto..."
+                        />
+                        <Button type="submit" background='white-0'><CgSearch /></Button>
+                    </NavbarMobileForm>
+                )}
+            </AnimatePresence>
             <ModalMenu/>
-        </>
+        </NavbarContainer>
         
     )
 }

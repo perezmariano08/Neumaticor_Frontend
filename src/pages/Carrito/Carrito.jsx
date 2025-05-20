@@ -9,11 +9,11 @@ import { Accordion, AccordionTab } from 'primereact/accordion'
 import { BsTags } from "react-icons/bs";
 import InputText from '../../components/UI/InputText/InputText'
 import { useDispatch, useSelector } from 'react-redux'
-import { useProductosConPrecio } from '../../hooks/api/useProductos'
 import { formatPrice } from '../../utils/formatPrice'
 import Skeleton from 'react-loading-skeleton'
 import { clearCart } from '../../redux/cart/cartSlice'
 import { confirmDialog } from 'primereact/confirmdialog'
+import { useProductosConPrecio } from '../../api/productos/useProductos'
 
 const Carrito = () => {
     const [value, setValue] = useState('');
@@ -29,10 +29,12 @@ const Carrito = () => {
         return {
             ...producto,
             quantity: item.quantity,
-            subtotal: (producto?.precio || 0) * item.quantity
+            subtotal: (producto?.oferta === 'S' ? producto?.precio_oferta : producto?.precio || 0) * item.quantity
         };
         });
     }, [cartItems, productosConPrecio, isLoading]);
+
+    const exit = productosCarrito?.some((p) => p.stock === "N");
 
     const precioTotal = useMemo(() => {
         return productosCarrito.reduce((total, item) => total + item.subtotal, 0);
@@ -108,7 +110,7 @@ const Carrito = () => {
                                     }
                                 </CarritoResumenTotal>
                                 <CarritoResumenButtons>
-                                    <Button onClick={() => navigate('/profile')}>Continuar pedido</Button>
+                                    <Button disabled={exit} onClick={() => navigate('/profile')}>Continuar pedido</Button>
                                     <NavLink to={'/productos'}><LiaAngleLeftSolid />Elegir más productos</NavLink>
                                 </CarritoResumenButtons>
                             </CarritoResumenWrapper>

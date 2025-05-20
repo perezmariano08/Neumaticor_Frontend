@@ -1,5 +1,5 @@
 import React from 'react'
-import { useUsuarios } from '../../../hooks/api/useUsuarios';
+import { useUsuarios } from '../../../api/usuarios/useUsuarios';
 
 const Dashboard = () => {
     const { data: usuarios, error, isLoading } = useUsuarios();

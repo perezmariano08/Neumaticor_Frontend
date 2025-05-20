@@ -19,7 +19,7 @@ export const MensajeError = styled.div`
 
 export const LoginImagenWrapper = styled.div`
    width: 50%;
-   background-image: ${({ imageUrl }) => `url(${imageUrl})`};
+   background-image: url(${props => props.$imageUrl});
    background-size: cover;
    background-position: center;
    display: flex;

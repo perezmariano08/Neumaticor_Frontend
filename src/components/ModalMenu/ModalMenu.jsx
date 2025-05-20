@@ -24,9 +24,9 @@ const ModalMenu = () => {
                     {
                         !hiddenMenu && (
                             <ModalMenuContainerStyled
-                                initial={{ translateX: 600 }}
+                                initial={{ translateX: -600 }}
                                 animate={{ translateX: 0 }}
-                                exit={{ translateX: 600 }}
+                                exit={{ translateX: -600 }}
                                 transition={{ type: "spring", damping: 27 }}
                                 key="modal-menu"
                             >
@@ -34,10 +34,8 @@ const ModalMenu = () => {
                                     <img src={LogoNavbar} alt="" />
                                     <MdOutlineClose onClick={() => dispatch(toggleHiddenMenu())} />
                                 </ModalMenuHeader>
-                                <Divider/>
                                 <NavbarListModalMenu>
                                     <NavLinkStyled to={'/'} onClick={() => dispatch(toggleHiddenMenu())}>Inicio</NavLinkStyled>
-                                    <NavLinkStyled to={'/login'} onClick={() => dispatch(toggleHiddenMenu())}>Acceder</NavLinkStyled>
                                     <NavLinkStyled to={'/productos'} onClick={() => dispatch(toggleHiddenMenu())}>Productos</NavLinkStyled>
                                 </NavbarListModalMenu>
                             </ModalMenuContainerStyled>
